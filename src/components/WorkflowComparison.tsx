@@ -144,12 +144,12 @@ export default function WorkflowComparison() {
               </h3>
             </div>
 
-            {/* Column 3: DOTX Platform (Standard Dark Theme with #59008C Accent) */}
-            <div className="border-b border-white/10 px-4 md:px-6 py-4 bg-[#181818] text-white">
-              <span className="inline-block px-2 py-0.5 text-[10px] font-mono font-bold uppercase bg-[#59008C] text-white mb-1">
+            {/* Column 3: DOTX Platform (Rich #59008C Violet Theme) */}
+            <div className="border-b border-[#59008C]/40 px-4 md:px-6 py-4 bg-[#240038] text-white">
+              <span className="inline-block px-2 py-0.5 text-[10px] font-mono font-bold uppercase bg-[#59008C] text-white border border-[#59008C] mb-1">
                 Autonomous AI Platform
               </span>
-              <h3 className="font-black font-mono text-sm uppercase tracking-wider text-white">
+              <h3 className="font-black font-mono text-sm uppercase tracking-wider text-[#f3e8ff]">
                 DOTX Platform
               </h3>
             </div>
@@ -223,11 +223,11 @@ export default function WorkflowComparison() {
                   )}
                 </div>
 
-                {/* 3. DOTX Platform Cell (Standard Dark Cell with #59008C Accent) */}
-                <div className={`${isLastRow ? "" : "border-b"} border-white/10 px-4 md:px-6 py-3.5 min-h-[56px] flex flex-col justify-center bg-[#121212] text-neutral-200 relative overflow-hidden`}>
+                {/* 3. DOTX Platform Cell (Rich #59008C Violet Dark Theme) */}
+                <div className={`${isLastRow ? "" : "border-b border-[#59008C]/25"} px-4 md:px-6 py-3.5 min-h-[56px] flex flex-col justify-center bg-[#1a0029] text-white relative overflow-hidden`}>
                   <div className="flex items-center gap-3">
                     <div className={`w-4 h-4 border shrink-0 flex items-center justify-center transition-all ${
-                      dotxStatus === "idle" ? "border-white/20 text-white/20" :
+                      dotxStatus === "idle" ? "border-[#59008C]/60 text-[#59008C]/60 bg-transparent" :
                       dotxStatus === "running" ? "border-[#59008C] bg-[#59008C] text-white" :
                       "border-[#59008C] bg-[#59008C] text-white"
                     }`}>
@@ -241,12 +241,12 @@ export default function WorkflowComparison() {
                       )}
                       {dotxStatus === "idle" && <span className="text-[9px]">☑</span>}
                     </div>
-                    <p className={`font-mono text-xs font-bold transition-colors ${dotxStatus === "idle" ? "text-neutral-500" : "text-neutral-200"}`}>
+                    <p className={`font-mono text-xs font-bold transition-colors ${dotxStatus === "idle" ? "text-[#59008C]/60" : "text-[#f3e8ff]"}`}>
                       {phase.dotx}
                     </p>
                   </div>
                   {dotxStatus === "running" && (
-                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-white/10">
+                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#59008C]/30">
                       <motion.div className="h-full bg-[#59008C]" initial={{ width: "0%" }} animate={{ width: "100%" }} transition={{ duration: STEP_DELAY / 1000, ease: "linear" }} />
                     </div>
                   )}
@@ -284,15 +284,15 @@ export default function WorkflowComparison() {
               </AnimatePresence>
             </div>
 
-            {/* DOTX Platform Footer (Standard Format) */}
-            <div className="px-4 md:px-6 py-4 bg-[#181818] min-h-[52px] flex items-center">
+            {/* DOTX Platform Footer (Rich Violet Format) */}
+            <div className="px-4 md:px-6 py-4 bg-[#240038] min-h-[52px] flex items-center">
               <AnimatePresence>
                 {dotxDone ? (
-                  <motion.p initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="font-mono text-xs font-black uppercase text-white flex items-center gap-2">
+                  <motion.p initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="font-mono text-xs font-black uppercase text-[#f3e8ff] flex items-center gap-2">
                     <span className="text-emerald-400 font-bold">✓</span> Project Ready
                   </motion.p>
                 ) : (
-                  <p className="font-mono text-xs font-bold text-neutral-400 uppercase tracking-wider">Executing...</p>
+                  <p className="font-mono text-xs font-bold text-[#59008C]/60 uppercase tracking-wider">Executing...</p>
                 )}
               </AnimatePresence>
             </div>
