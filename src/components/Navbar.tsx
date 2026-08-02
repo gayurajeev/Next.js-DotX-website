@@ -7,9 +7,7 @@ export default function Navbar() {
 
         {/* Logo */}
         <a href="/" className="flex items-center gap-2 group">
-          <div className="w-9 h-9 overflow-hidden shrink-0">
-            <img src="/logo-highres-seamless.png" alt="DotX Logo" className="w-full h-full object-contain block" />
-          </div>
+          <img src="/logo-highres-seamless.png" alt="DotX Logo" className="h-9 w-auto object-contain block shrink-0" />
           <span className="font-black text-black tracking-tighter text-xl leading-none">DotX</span>
         </a>
         
