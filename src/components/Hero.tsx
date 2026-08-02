@@ -59,7 +59,7 @@ export default function Hero() {
           className="relative mb-4 flex items-center justify-center"
         >
           <img
-            src="/logo-original-unmodified.png"
+            src="/logo-blended-pureblack.png"
             alt="DotX Logo"
             className="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 lg:w-48 lg:h-48 object-contain block"
           />
