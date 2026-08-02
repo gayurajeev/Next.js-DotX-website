@@ -5,7 +5,7 @@ import { Apple, Monitor } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%";
-const WORDS = ["BUILD.", "DEPLOY.", "AUTOMATE."];
+const WORDS = ["BUILD.", "DELIVER.", "AUTOMATE."];
 
 function ScrambleLine({ text, delay = 0 }: { text: string; delay?: number }) {
   const [display, setDisplay] = useState(() => text.replace(/./g, " "));
@@ -38,7 +38,7 @@ function ScrambleLine({ text, delay = 0 }: { text: string; delay?: number }) {
   }, [text, delay]);
 
   return (
-    <span className={`font-mono transition-opacity ${done ? "" : "text-neutral-300"}`}>
+    <span className={`font-mono transition-opacity ${done ? "" : "text-neutral-600"}`}>
       {display}
     </span>
   );
@@ -46,10 +46,10 @@ function ScrambleLine({ text, delay = 0 }: { text: string; delay?: number }) {
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-white">
+    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-black text-white">
 
       {/* Main content */}
-      <div className="z-10 flex flex-col items-center text-center px-6 max-w-4xl w-full">
+      <div className="z-10 flex flex-col items-center text-center px-6 max-w-5xl w-full">
 
         {/* Logo — the hero visual */}
         <motion.div
@@ -62,13 +62,12 @@ export default function Hero() {
           <motion.img
             src="/logo.jpeg"
             alt="DotX"
-            className="w-28 h-28 md:w-36 md:h-36 object-cover block relative z-10"
-            style={{ borderRadius: "4px" }}
+            className="w-28 h-28 md:w-36 md:h-36 object-cover block relative z-10 border border-white/10 rounded-2xl overflow-hidden"
             animate={{
               boxShadow: [
-                "0 0 0px rgba(0,0,0,0.0)",
-                "0 8px 40px rgba(0,0,0,0.10)",
-                "0 0 0px rgba(0,0,0,0.0)",
+                "0 0 0px rgba(255,255,255,0.0)",
+                "0 8px 40px rgba(255,255,255,0.15)",
+                "0 0 0px rgba(255,255,255,0.0)",
               ],
             }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
@@ -90,13 +89,17 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3, delay: 0.7 }}
-          className="text-5xl md:text-7xl lg:text-[6.5rem] font-black tracking-tighter mb-6 leading-[1.05] text-black uppercase w-full"
+          className="text-xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-[4.5rem] 2xl:text-[5.5rem] font-black tracking-tight mb-6 leading-tight text-white uppercase w-full flex flex-row items-center justify-center gap-2.5 sm:gap-4 md:gap-6 whitespace-nowrap max-w-full px-2 pl-8 sm:pl-16 md:pl-24 lg:pl-32"
         >
-          {WORDS.map((word, i) => (
-            <div key={i} className="block">
-              <ScrambleLine text={word} delay={900 + i * 350} />
-            </div>
-          ))}
+          <span className="flex-1 text-right">
+            <ScrambleLine text={WORDS[0]} delay={900} />
+          </span>
+          <span className="shrink-0 text-center font-black">
+            <ScrambleLine text={WORDS[1]} delay={1250} />
+          </span>
+          <span className="flex-1 text-left">
+            <ScrambleLine text={WORDS[2]} delay={1600} />
+          </span>
         </motion.h1>
 
         {/* Subtitle */}
@@ -104,9 +107,9 @@ export default function Hero() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 2.0 }}
-          className="text-sm md:text-base text-neutral-500 max-w-lg mb-10 leading-relaxed font-mono"
+          className="text-sm md:text-base text-neutral-400 max-w-lg mb-10 leading-relaxed font-mono"
         >
-          An autonomous AI platform covering the complete software development lifecycle — from requirements to deployment.
+          An autonomous AI platform covering the complete software development lifecycle — from requirements to work completed.
         </motion.p>
 
         {/* Buttons */}
@@ -116,23 +119,17 @@ export default function Hero() {
           transition={{ duration: 0.5, delay: 2.3 }}
           className="flex flex-col sm:flex-row items-center gap-4"
         >
-          <button className="w-full sm:w-auto clip-button bg-black text-white px-8 py-4 font-bold uppercase text-xs tracking-widest flex items-center justify-center gap-3 hover:bg-neutral-800 transition-colors">
+          <button className="w-full sm:w-auto clip-button bg-white text-black px-8 py-4 font-bold uppercase text-xs tracking-widest flex items-center justify-center gap-3 hover:bg-neutral-200 transition-colors">
             <Apple className="w-4 h-4" />
             Download for macOS
           </button>
-          <button className="w-full sm:w-auto clip-button bg-white text-black px-8 py-4 font-bold uppercase text-xs tracking-widest flex items-center justify-center gap-3 border border-black/20 hover:border-black hover:bg-black hover:text-white transition-all">
+          <button className="w-full sm:w-auto clip-button bg-black text-white px-8 py-4 font-bold uppercase text-xs tracking-widest flex items-center justify-center gap-3 border border-white/20 hover:border-white hover:bg-neutral-900 transition-all">
             <Monitor className="w-4 h-4" />
             Download for Windows
           </button>
         </motion.div>
 
       </div>
-
-      {/* Subtle corner marks */}
-      <div className="absolute top-6 left-6 w-4 h-4 border-t border-l border-black/20 pointer-events-none" />
-      <div className="absolute top-6 right-6 w-4 h-4 border-t border-r border-black/20 pointer-events-none" />
-      <div className="absolute bottom-6 left-6 w-4 h-4 border-b border-l border-black/20 pointer-events-none" />
-      <div className="absolute bottom-6 right-6 w-4 h-4 border-b border-r border-black/20 pointer-events-none" />
 
     </section>
   );
