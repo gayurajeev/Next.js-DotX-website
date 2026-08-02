@@ -11,7 +11,10 @@ export const metadata: Metadata = {
   title: "DotX | Autonomous AI Platform for Development & Enterprise",
   description: "DotX covers the complete software development lifecycle with autonomous AI agents — from requirements analysis to deployment.",
   icons: {
-    icon: "/logo.jpeg",
+    icon: [
+      { url: "/logo.jpeg", type: "image/jpeg" },
+      { url: "/icon.png", type: "image/png" },
+    ],
     shortcut: "/logo.jpeg",
     apple: "/logo.jpeg",
   },
