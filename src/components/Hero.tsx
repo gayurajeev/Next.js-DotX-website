@@ -56,21 +56,20 @@ export default function Hero() {
           initial={{ opacity: 0, scale: 0.6 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="relative mb-10"
+          className="relative mb-10 flex items-center justify-center"
         >
-          {/* The logo itself */}
+          {/* Ambient background aura glow */}
+          <div className="absolute w-40 h-40 md:w-52 md:h-52 rounded-full bg-purple-600/20 blur-3xl pointer-events-none" />
+
+          {/* The logo image blending seamlessly into black */}
           <motion.img
             src="/logo.jpeg"
             alt="DotX"
-            className="w-28 h-28 md:w-36 md:h-36 object-cover block relative z-10 border border-white/10 rounded-2xl overflow-hidden"
-            animate={{
-              boxShadow: [
-                "0 0 0px rgba(255,255,255,0.0)",
-                "0 8px 40px rgba(255,255,255,0.15)",
-                "0 0 0px rgba(255,255,255,0.0)",
-              ],
+            className="w-28 h-28 md:w-36 md:h-36 object-cover block relative z-10 rounded-full mix-blend-screen"
+            style={{
+              maskImage: "radial-gradient(circle, black 60%, transparent 98%)",
+              WebkitMaskImage: "radial-gradient(circle, black 60%, transparent 98%)"
             }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
           />
         </motion.div>
 
