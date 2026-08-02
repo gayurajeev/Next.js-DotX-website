@@ -144,15 +144,13 @@ export default function WorkflowComparison() {
               </h3>
             </div>
 
-            {/* Column 3: DOTX Platform (Sleek Dark Theme with Purple Accents) */}
-            <div className="border-b border-purple-800/40 px-4 md:px-6 py-4 bg-[#130d21] text-white relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-24 h-24 bg-purple-500/10 blur-xl pointer-events-none" />
+            {/* Column 3: DOTX Platform (Standard Dark Theme with Purple Accents) */}
+            <div className="border-b border-purple-800/40 px-4 md:px-6 py-4 bg-[#130d21] text-white">
               <span className="inline-block px-2 py-0.5 text-[10px] font-mono font-bold uppercase bg-purple-500/20 text-purple-300 border border-purple-500/30 mb-1">
                 Autonomous AI Platform
               </span>
-              <h3 className="font-black font-mono text-sm uppercase tracking-wider text-purple-100 flex items-center gap-2">
+              <h3 className="font-black font-mono text-sm uppercase tracking-wider text-purple-100">
                 DOTX Platform
-                <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
               </h3>
             </div>
           </div>
@@ -286,18 +284,13 @@ export default function WorkflowComparison() {
               </AnimatePresence>
             </div>
 
-            {/* DOTX Platform Footer (Sleek Dark Card with Autonomous Badge) */}
-            <div className="px-4 md:px-6 py-4 bg-[#140c24] border-t-2 border-purple-500/40 min-h-[52px] flex items-center relative overflow-hidden">
+            {/* DOTX Platform Footer (Standard Format) */}
+            <div className="px-4 md:px-6 py-4 bg-[#130d21] min-h-[52px] flex items-center">
               <AnimatePresence>
                 {dotxDone ? (
-                  <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="flex items-center justify-between w-full">
-                    <p className="font-mono text-xs font-black uppercase text-white flex items-center gap-2">
-                      <span className="text-purple-400 font-bold">✓</span> Project Ready
-                    </p>
-                    <span className="px-2 py-0.5 text-[9px] font-mono font-bold uppercase bg-purple-500/20 text-purple-300 border border-purple-500/40 rounded">
-                      100% Autonomous
-                    </span>
-                  </motion.div>
+                  <motion.p initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="font-mono text-xs font-black uppercase text-purple-100 flex items-center gap-2">
+                    <span className="text-purple-400 font-bold">✓</span> Project Ready
+                  </motion.p>
                 ) : (
                   <p className="font-mono text-xs font-bold text-purple-400/40 uppercase tracking-wider">Executing...</p>
                 )}
