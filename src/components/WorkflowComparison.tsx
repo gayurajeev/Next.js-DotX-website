@@ -144,12 +144,12 @@ export default function WorkflowComparison() {
               </h3>
             </div>
 
-            {/* Column 3: DOTX Platform (Standard Dark Theme with Purple Accents) */}
-            <div className="border-b border-purple-800/40 px-4 md:px-6 py-4 bg-[#130d21] text-white">
-              <span className="inline-block px-2 py-0.5 text-[10px] font-mono font-bold uppercase bg-purple-500/20 text-purple-300 border border-purple-500/30 mb-1">
+            {/* Column 3: DOTX Platform (Brand Violet Theme #59008C) */}
+            <div className="border-b border-[#59008C]/40 px-4 md:px-6 py-4 bg-[#190028] text-white">
+              <span className="inline-block px-2 py-0.5 text-[10px] font-mono font-bold uppercase bg-[#59008C]/30 text-[#e9d5ff] border border-[#59008C]/50 mb-1">
                 Autonomous AI Platform
               </span>
-              <h3 className="font-black font-mono text-sm uppercase tracking-wider text-purple-100">
+              <h3 className="font-black font-mono text-sm uppercase tracking-wider text-[#e9d5ff]">
                 DOTX Platform
               </h3>
             </div>
@@ -223,16 +223,16 @@ export default function WorkflowComparison() {
                   )}
                 </div>
 
-                {/* 3. DOTX Platform Cell (Sleek dark purple theme) */}
-                <div className={`${isLastRow ? "" : "border-b border-purple-900/40"} px-4 md:px-6 py-3.5 min-h-[56px] flex flex-col justify-center bg-[#0d0718] text-white relative overflow-hidden`}>
+                {/* 3. DOTX Platform Cell (Brand Violet #59008C Theme) */}
+                <div className={`${isLastRow ? "" : "border-b border-[#59008C]/30"} px-4 md:px-6 py-3.5 min-h-[56px] flex flex-col justify-center bg-[#12001f] text-white relative overflow-hidden`}>
                   <div className="flex items-center gap-3">
                     <div className={`w-4 h-4 border shrink-0 flex items-center justify-center transition-all ${
-                      dotxStatus === "idle" ? "border-purple-800/60 text-purple-800/60 bg-[#0d0718]" :
-                      dotxStatus === "running" ? "border-purple-400 bg-purple-950 text-purple-300" :
-                      "border-purple-400 bg-purple-600 text-white"
+                      dotxStatus === "idle" ? "border-[#59008C]/50 text-[#59008C]/50 bg-[#12001f]" :
+                      dotxStatus === "running" ? "border-[#59008C] bg-[#59008C]/40 text-[#e9d5ff]" :
+                      "border-[#59008C] bg-[#59008C] text-white"
                     }`}>
                       {dotxStatus === "running" && (
-                        <motion.div className="w-1.5 h-1.5 bg-purple-300" animate={{ scale: [1, 0.4, 1] }} transition={{ duration: 0.3, repeat: Infinity }} />
+                        <motion.div className="w-1.5 h-1.5 bg-[#e9d5ff]" animate={{ scale: [1, 0.4, 1] }} transition={{ duration: 0.3, repeat: Infinity }} />
                       )}
                       {dotxStatus === "done" && (
                         <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 12 12">
@@ -241,13 +241,13 @@ export default function WorkflowComparison() {
                       )}
                       {dotxStatus === "idle" && <span className="text-[9px]">☑</span>}
                     </div>
-                    <p className={`font-mono text-xs font-bold transition-colors ${dotxStatus === "idle" ? "text-purple-300/30" : "text-purple-100"}`}>
+                    <p className={`font-mono text-xs font-bold transition-colors ${dotxStatus === "idle" ? "text-[#59008C]/40" : "text-[#e9d5ff]"}`}>
                       {phase.dotx}
                     </p>
                   </div>
                   {dotxStatus === "running" && (
-                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-purple-950">
-                      <motion.div className="h-full bg-purple-400" initial={{ width: "0%" }} animate={{ width: "100%" }} transition={{ duration: STEP_DELAY / 1000, ease: "linear" }} />
+                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#59008C]/20">
+                      <motion.div className="h-full bg-[#59008C]" initial={{ width: "0%" }} animate={{ width: "100%" }} transition={{ duration: STEP_DELAY / 1000, ease: "linear" }} />
                     </div>
                   )}
                 </div>
@@ -284,15 +284,15 @@ export default function WorkflowComparison() {
               </AnimatePresence>
             </div>
 
-            {/* DOTX Platform Footer (Standard Format) */}
-            <div className="px-4 md:px-6 py-4 bg-[#130d21] min-h-[52px] flex items-center">
+            {/* DOTX Platform Footer (#59008C Brand Theme) */}
+            <div className="px-4 md:px-6 py-4 bg-[#190028] min-h-[52px] flex items-center">
               <AnimatePresence>
                 {dotxDone ? (
-                  <motion.p initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="font-mono text-xs font-black uppercase text-purple-100 flex items-center gap-2">
-                    <span className="text-purple-400 font-bold">✓</span> Project Ready
+                  <motion.p initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="font-mono text-xs font-black uppercase text-[#e9d5ff] flex items-center gap-2">
+                    <span className="text-[#59008C] bg-white rounded-full w-4 h-4 flex items-center justify-center font-bold text-[10px]">✓</span> Project Ready
                   </motion.p>
                 ) : (
-                  <p className="font-mono text-xs font-bold text-purple-400/40 uppercase tracking-wider">Executing...</p>
+                  <p className="font-mono text-xs font-bold text-[#59008C]/60 uppercase tracking-wider">Executing...</p>
                 )}
               </AnimatePresence>
             </div>

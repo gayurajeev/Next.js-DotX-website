@@ -59,7 +59,7 @@ export default function Hero() {
           className="relative mb-10 flex items-center justify-center"
         >
           {/* Ambient background aura glow */}
-          <div className="absolute w-40 h-40 md:w-52 md:h-52 rounded-full bg-purple-600/20 blur-3xl pointer-events-none" />
+          <div className="absolute w-40 h-40 md:w-52 md:h-52 rounded-full bg-[#59008C]/25 blur-3xl pointer-events-none" />
 
           {/* The logo image blending seamlessly into black */}
           <motion.img
