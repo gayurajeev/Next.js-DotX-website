@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Apple, Monitor } from "lucide-react";
+import { MacLogo, WindowsLogo } from "@/components/OsLogos";
 import { useEffect, useState } from "react";
 
 const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%";
@@ -51,26 +51,20 @@ export default function Hero() {
       {/* Main content */}
       <div className="z-10 flex flex-col items-center text-center px-6 max-w-5xl w-full">
 
-        {/* Logo — the hero visual */}
+        {/* Logo — standard app icon card */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.6 }}
+          initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="relative mb-10 flex items-center justify-center"
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="relative mb-8 flex items-center justify-center"
         >
-          {/* Ambient background aura glow */}
-          <div className="absolute w-40 h-40 md:w-52 md:h-52 rounded-full bg-[#59008C]/25 blur-3xl pointer-events-none" />
-
-          {/* The logo image blending seamlessly into black */}
-          <motion.img
-            src="/logo.jpeg"
-            alt="DotX"
-            className="w-28 h-28 md:w-36 md:h-36 object-cover block relative z-10 rounded-full mix-blend-screen"
-            style={{
-              maskImage: "radial-gradient(circle, black 60%, transparent 98%)",
-              WebkitMaskImage: "radial-gradient(circle, black 60%, transparent 98%)"
-            }}
-          />
+          <div className="w-24 h-24 md:w-28 md:h-28 rounded-2xl md:rounded-3xl overflow-hidden border border-white/15 shadow-2xl shadow-purple-950/30 relative z-10 bg-black">
+            <img
+              src="/logo.jpeg"
+              alt="DotX Logo"
+              className="w-full h-full object-cover block"
+            />
+          </div>
         </motion.div>
 
         {/* DotX wordmark */}
@@ -119,11 +113,11 @@ export default function Hero() {
           className="flex flex-col sm:flex-row items-center gap-4"
         >
           <button className="w-full sm:w-auto clip-button bg-white text-black px-8 py-4 font-bold uppercase text-xs tracking-widest flex items-center justify-center gap-3 border border-white hover:bg-black hover:text-white transition-all">
-            <Apple className="w-4 h-4" />
+            <MacLogo className="w-4 h-4" />
             Download for macOS
           </button>
           <button className="w-full sm:w-auto clip-button bg-black text-white px-8 py-4 font-bold uppercase text-xs tracking-widest flex items-center justify-center gap-3 border border-white/20 hover:border-white hover:bg-white hover:text-black transition-all">
-            <Monitor className="w-4 h-4" />
+            <WindowsLogo className="w-4 h-4" />
             Download for Windows
           </button>
         </motion.div>

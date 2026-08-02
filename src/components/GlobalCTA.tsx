@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import { MacLogo, WindowsLogo, LinuxLogo } from "@/components/OsLogos";
 
 function WireframeGlobe() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -130,9 +131,14 @@ export default function GlobalCTA() {
               Windows, macOS, Linux — one native desktop client powered by Avalonia UI. No cloud lock-in, no browser overhead. Your data stays on your machine.
             </p>
             <div className="flex flex-wrap gap-3">
-              {["Windows", "macOS", "Linux"].map((os) => (
-                <div key={os} className="clip-button border-2 border-white/20 px-5 py-2 font-mono font-black text-sm uppercase tracking-widest text-white hover:border-white hover:bg-white hover:text-black transition-all cursor-crosshair">
-                  {os}
+              {[
+                { name: "macOS", logo: MacLogo },
+                { name: "Windows", logo: WindowsLogo },
+                { name: "Linux", logo: LinuxLogo },
+              ].map(({ name, logo: Logo }) => (
+                <div key={name} className="clip-button border-2 border-white/20 px-5 py-2.5 font-mono font-black text-sm uppercase tracking-widest text-white hover:border-white hover:bg-white hover:text-black transition-all cursor-pointer flex items-center gap-2.5">
+                  <Logo className="w-4 h-4 shrink-0" />
+                  {name}
                 </div>
               ))}
             </div>
