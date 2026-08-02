@@ -134,8 +134,8 @@ export default function WorkflowComparison() {
               </h3>
             </div>
 
-            {/* Column 2: Vibe Coding (Grey Theme) */}
-            <div className="border-b border-r border-neutral-700 px-4 md:px-6 py-4 bg-neutral-800 text-white">
+            {/* Column 2: Vibe Coding (Sleek Dark Theme) */}
+            <div className="border-b border-r border-white/10 px-4 md:px-6 py-4 bg-[#181818] text-white">
               <span className="inline-block px-2 py-0.5 text-[10px] font-mono font-bold uppercase bg-white/10 text-neutral-300 mb-1 truncate max-w-full">
                 codex, claude code, antigravity, etc.
               </span>
@@ -196,16 +196,16 @@ export default function WorkflowComparison() {
                   )}
                 </div>
 
-                {/* 2. Vibe Coding Cell (Grey) */}
-                <div className={`border-r ${isLastRow ? "" : "border-b"} border-neutral-700 px-4 md:px-6 py-3.5 min-h-[56px] flex flex-col justify-center bg-neutral-900 text-neutral-200 relative overflow-hidden`}>
+                {/* 2. Vibe Coding Cell (Dark sleek bg-white/5 style color) */}
+                <div className={`border-r ${isLastRow ? "" : "border-b"} border-white/10 px-4 md:px-6 py-3.5 min-h-[56px] flex flex-col justify-center bg-[#121212] text-neutral-200 relative overflow-hidden`}>
                   <div className="flex items-center gap-3">
                     <div className={`w-4 h-4 border shrink-0 flex items-center justify-center transition-all ${
-                      vibeStatus === "idle" ? "border-neutral-600 text-neutral-600" :
-                      vibeStatus === "running" ? "border-neutral-300 bg-neutral-800 text-neutral-300" :
-                      "border-neutral-200 bg-neutral-200 text-black"
+                      vibeStatus === "idle" ? "border-white/20 text-white/20" :
+                      vibeStatus === "running" ? "border-white/40 bg-white/10 text-white" :
+                      "border-white bg-white text-black"
                     }`}>
                       {vibeStatus === "running" && (
-                        <motion.div className="w-1.5 h-1.5 bg-neutral-300" animate={{ scale: [1, 0.4, 1] }} transition={{ duration: 0.4, repeat: Infinity }} />
+                        <motion.div className="w-1.5 h-1.5 bg-white" animate={{ scale: [1, 0.4, 1] }} transition={{ duration: 0.4, repeat: Infinity }} />
                       )}
                       {vibeStatus === "done" && (
                         <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 12 12">
@@ -219,19 +219,19 @@ export default function WorkflowComparison() {
                     </p>
                   </div>
                   {vibeStatus === "running" && (
-                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-neutral-700">
-                      <motion.div className="h-full bg-neutral-400" initial={{ width: "0%" }} animate={{ width: "100%" }} transition={{ duration: STEP_DELAY / 1000, ease: "linear" }} />
+                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-white/10">
+                      <motion.div className="h-full bg-white/40" initial={{ width: "0%" }} animate={{ width: "100%" }} transition={{ duration: STEP_DELAY / 1000, ease: "linear" }} />
                     </div>
                   )}
                 </div>
 
-                {/* 3. DOTX Platform Cell (Purple) */}
+                {/* 3. DOTX Platform Cell (Purple Theme without tick box glow) */}
                 <div className={`${isLastRow ? "" : "border-b border-purple-900/60"} px-4 md:px-6 py-3.5 min-h-[56px] flex flex-col justify-center bg-purple-950 text-white relative overflow-hidden`}>
                   <div className="flex items-center gap-3">
                     <div className={`w-4 h-4 border shrink-0 flex items-center justify-center transition-all ${
                       dotxStatus === "idle" ? "border-purple-800/80 text-purple-800/80 bg-purple-950" :
-                      dotxStatus === "running" ? "border-purple-400 bg-purple-900/80 text-purple-300 shadow-[0_0_8px_#a855f7]" :
-                      "border-purple-400 bg-purple-500 text-white shadow-[0_0_10px_#a855f7]"
+                      dotxStatus === "running" ? "border-purple-400 bg-purple-900/80 text-purple-300" :
+                      "border-purple-400 bg-purple-600 text-white"
                     }`}>
                       {dotxStatus === "running" && (
                         <motion.div className="w-1.5 h-1.5 bg-purple-300" animate={{ scale: [1, 0.4, 1] }} transition={{ duration: 0.3, repeat: Infinity }} />
@@ -249,7 +249,7 @@ export default function WorkflowComparison() {
                   </div>
                   {dotxStatus === "running" && (
                     <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-purple-900">
-                      <motion.div className="h-full bg-purple-400 shadow-[0_0_8px_#c084fc]" initial={{ width: "0%" }} animate={{ width: "100%" }} transition={{ duration: STEP_DELAY / 1000, ease: "linear" }} />
+                      <motion.div className="h-full bg-purple-400" initial={{ width: "0%" }} animate={{ width: "100%" }} transition={{ duration: STEP_DELAY / 1000, ease: "linear" }} />
                     </div>
                   )}
                 </div>
@@ -274,7 +274,7 @@ export default function WorkflowComparison() {
             </div>
 
             {/* Vibe Coding Footer */}
-            <div className="border-r border-neutral-700 px-4 md:px-6 py-4 bg-neutral-800 min-h-[52px] flex items-center">
+            <div className="border-r border-white/10 px-4 md:px-6 py-4 bg-[#181818] min-h-[52px] flex items-center">
               <AnimatePresence>
                 {vibeDone ? (
                   <motion.p initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="font-mono text-xs font-black uppercase text-white flex items-center gap-2">
@@ -291,7 +291,7 @@ export default function WorkflowComparison() {
               <AnimatePresence>
                 {dotxDone ? (
                   <motion.p initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="font-mono text-xs font-black uppercase text-purple-100 flex items-center gap-2">
-                    <span className="text-purple-300 font-bold shadow-[0_0_8px_#c084fc]">✓</span> Project Ready
+                    <span className="text-purple-300 font-bold">✓</span> Project Ready
                   </motion.p>
                 ) : (
                   <p className="font-mono text-xs font-bold text-purple-400/40 uppercase tracking-wider">Executing...</p>
