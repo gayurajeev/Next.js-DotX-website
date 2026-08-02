@@ -61,7 +61,7 @@ export default function Hero() {
           <img
             src="/logo-attached-seamless.png"
             alt="DotX Logo"
-            className="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 lg:w-48 lg:h-48 object-contain block"
+            className="w-40 h-40 sm:w-52 sm:h-52 md:w-64 md:h-64 lg:w-72 lg:h-72 object-contain block"
           />
         </motion.div>
 
