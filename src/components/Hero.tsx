@@ -51,29 +51,22 @@ export default function Hero() {
       {/* Main content */}
       <div className="z-10 flex flex-col items-center text-center px-6 max-w-5xl w-full">
 
-        {/* Logo */}
+        {/* Logo Brand Mark (Seamless Emblem + Bold White Wordmark) */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-8 flex items-center justify-center"
+          className="mb-10 flex flex-row items-center justify-center gap-3 sm:gap-5"
         >
           <img
-            src="/logo-seamless.png"
+            src="/logo-seamless-perfect.png"
             alt="DotX Logo"
-            className="w-24 h-24 md:w-36 md:h-36 object-contain block"
+            className="w-14 h-14 sm:w-20 sm:h-20 md:w-24 md:h-24 object-contain block shrink-0"
           />
+          <span className="font-black text-white text-4xl sm:text-5xl md:text-6xl tracking-tight leading-none">
+            DotX
+          </span>
         </motion.div>
-
-        {/* DotX wordmark */}
-        <motion.p
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.5 }}
-          className="text-xs font-mono font-black uppercase tracking-[0.4em] text-neutral-400 mb-10"
-        >
-          DotX
-        </motion.p>
 
         {/* Scramble headline */}
         <motion.h1
