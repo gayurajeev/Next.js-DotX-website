@@ -1,21 +1,23 @@
-import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
+import AppShowcase from "@/components/AppShowcase";
 import WhatIsDotX from "@/components/WhatIsDotX";
 import WorkflowComparison from "@/components/WorkflowComparison";
 import HowItWorks from "@/components/HowItWorks";
 import CoreFeatures from "@/components/CoreFeatures";
+import GlobalCTA from "@/components/GlobalCTA";
 import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-black">
-      <Navbar />
+    <main className="min-h-screen bg-transparent">
       <Hero />
+      <AppShowcase />
       <WhatIsDotX />
       <WorkflowComparison />
       <HowItWorks />
       <CoreFeatures />
+      <GlobalCTA />
       <FAQ />
       <Footer />
     </main>

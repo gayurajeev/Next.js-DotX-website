@@ -1,107 +1,75 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Sparkles, ClipboardList, Settings, Rocket } from "lucide-react";
 
-const cards = [
+const dotxFeatures = [
   {
-    title: "Plan",
-    description: "Analyze requirements and create implementation strategies.",
-    icon: ClipboardList,
+    num: "01",
+    title: "REQUIREMENTS ANALYSIS",
+    desc: "Parses and interprets requirements documents — PRD, FRD, NFR — to establish architectural constraints before a single line of code is written."
   },
   {
-    title: "Build",
-    description: "Generate production-ready software using intelligent AI agents.",
-    icon: Settings,
+    num: "02",
+    title: "IMPLEMENTATION PLANNING",
+    desc: "Generates granular implementation plans and coordinates specialized AI agents to execute tasks across the full development lifecycle."
   },
   {
-    title: "Deliver",
-    description: "Test, document, debug, and deploy projects efficiently.",
-    icon: Rocket,
+    num: "03",
+    title: "CODING & DEBUGGING",
+    desc: "Assists developers with code generation, real-time debugging, and automated test writing across multiple languages and frameworks."
+  },
+  {
+    num: "04",
+    title: "DEPLOYMENT & DEVOPS",
+    desc: "Handles documentation, deployment pipelines, and project management — fully integrated with Docker, GitHub Actions, and CI/CD workflows."
   },
 ];
 
 export default function WhatIsDotX() {
   return (
-    <section className="py-32 relative bg-black border-t border-white/10 overflow-hidden">
-      <div className="container mx-auto px-4 max-w-7xl">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-          
-          {/* Left Column: Content */}
-          <div className="flex flex-col">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6 }}
-              className="flex items-center gap-2 text-white font-medium mb-6"
-            >
-              <Sparkles className="w-4 h-4" />
-              <span className="uppercase tracking-widest text-xs text-neutral-400">The Platform</span>
-            </motion.div>
-            
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-white tracking-tight"
-            >
-              What is DotX?
-            </motion.h2>
-            
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-neutral-300 text-lg md:text-xl leading-relaxed mb-6"
-            >
-              DotX is an AI-powered desktop platform that coordinates specialized AI agents to automate the complete software development lifecycle.
-            </motion.p>
-            
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-neutral-500 text-lg leading-relaxed"
-            >
-              Instead of relying on a single assistant, DotX enables intelligent collaboration between multiple autonomous agents that analyze requirements, create implementation plans, generate code, perform testing, write documentation, assist debugging, and prepare deployment.
-            </motion.p>
-          </div>
+    <section className="py-16 md:py-24 relative bg-black text-white border-y border-black/80">
+      <div className="container mx-auto px-4 md:px-6 max-w-6xl">
 
-          {/* Right Column: Feature Cards */}
-          <div className="flex flex-col gap-6 relative">
-            {/* Ambient background glow behind cards */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[120%] bg-white/5 rounded-full blur-[100px] pointer-events-none" />
-            
-            {cards.map((card, index) => {
-              const Icon = card.icon;
-              return (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: 40 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.7, delay: index * 0.2, ease: "easeOut" }}
-                  className="relative z-10 flex items-start gap-6 p-6 rounded-3xl bg-[#0a0a0a] border border-white/10 hover:bg-white/[0.03] hover:border-white/20 transition-all duration-300 group shadow-xl"
-                >
-                  <div className="w-14 h-14 shrink-0 rounded-2xl bg-white/5 border border-white/10 text-white flex items-center justify-center group-hover:scale-110 group-hover:bg-white group-hover:text-black transition-all duration-300">
-                    <Icon className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-white mb-2 tracking-tight">{card.title}</h3>
-                    <p className="text-neutral-400 leading-relaxed">
-                      {card.description}
-                    </p>
-                  </div>
-                </motion.div>
-              );
-            })}
+        {/* DotX Block */}
+        <div className="grid md:grid-cols-[1fr_2fr] gap-10 md:gap-16">
+          <div className="md:sticky md:top-24 h-fit">
+            <motion.h2
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="text-3xl md:text-5xl font-black uppercase tracking-tighter mb-4 md:mb-6 leading-none"
+            >
+              DOT<br/>X
+            </motion.h2>
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="w-16 h-2 bg-white mb-6"
+            />
+            <p className="text-neutral-400 font-mono text-sm leading-relaxed max-w-xs">
+              FROM REQUIREMENTS TO DEPLOYMENT — ALL DRIVEN BY SPECIALIZED AI AGENTS.
+            </p>
           </div>
-          
+          <div className="grid sm:grid-cols-2 gap-8">
+            {dotxFeatures.map((feature, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="border border-white/10 p-8 hover:border-white/40 transition-colors bg-white/5 clip-chamfer"
+              >
+                <div className="text-3xl font-black text-white/20 mb-4 font-mono">{feature.num}</div>
+                <h3 className="font-bold text-xl tracking-tight uppercase mb-4">{feature.title}</h3>
+                <p className="text-neutral-400 font-mono text-sm leading-relaxed">{feature.desc}</p>
+              </motion.div>
+            ))}
+          </div>
         </div>
+
       </div>
     </section>
   );

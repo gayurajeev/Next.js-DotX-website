@@ -1,129 +1,139 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Download, ChevronRight } from "lucide-react";
+import { Apple, Monitor } from "lucide-react";
+import { useEffect, useState } from "react";
 
-const lifecycleStages = [
-  "Requirement Analysis",
-  "Planning",
-  "Coding",
-  "Testing",
-  "Documentation",
-  "Debugging",
-  "Deployment"
-];
+const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%";
+const WORDS = ["BUILD.", "DEPLOY.", "AUTOMATE."];
+
+function ScrambleLine({ text, delay = 0 }: { text: string; delay?: number }) {
+  const [display, setDisplay] = useState(() => text.replace(/./g, " "));
+  const [done, setDone] = useState(false);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      let iteration = 0;
+      const total = text.length * 6;
+      const interval = setInterval(() => {
+        setDisplay(
+          text
+            .split("")
+            .map((char, idx) => {
+              if (char === " " || char === "\n") return char;
+              if (idx < iteration / 6) return char;
+              return CHARS[Math.floor(Math.random() * CHARS.length)];
+            })
+            .join("")
+        );
+        iteration++;
+        if (iteration > total) {
+          clearInterval(interval);
+          setDisplay(text);
+          setDone(true);
+        }
+      }, 28);
+    }, delay);
+    return () => clearTimeout(timeout);
+  }, [text, delay]);
+
+  return (
+    <span className={`font-mono transition-opacity ${done ? "" : "text-neutral-300"}`}>
+      {display}
+    </span>
+  );
+}
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#000000] pt-24 pb-12">
-      {/* Background glow effects */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-white/5 rounded-full blur-[120px] opacity-50 pointer-events-none" />
+    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-white">
 
-      <div className="z-10 container mx-auto px-4 flex flex-col items-center text-center mt-4">
-        <motion.img
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          src="/logo.jpeg"
-          alt="DotX Logo"
-          className="w-24 h-auto mb-8 rounded-3xl"
-        />
+      {/* Main content */}
+      <div className="z-10 flex flex-col items-center text-center px-6 max-w-4xl w-full">
 
+        {/* Logo — the hero visual */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
-          className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/30 bg-white/10 text-white text-sm font-medium mb-8"
+          initial={{ opacity: 0, scale: 0.6 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          className="relative mb-10"
         >
-          <span className="flex h-2 w-2 rounded-full bg-white shadow-[0_0_8px_#ffffff]"></span>
-          DotX version 1.0 is now live
+          {/* The logo itself */}
+          <motion.img
+            src="/logo.jpeg"
+            alt="DotX"
+            className="w-28 h-28 md:w-36 md:h-36 object-cover block relative z-10"
+            style={{ borderRadius: "4px" }}
+            animate={{
+              boxShadow: [
+                "0 0 0px rgba(0,0,0,0.0)",
+                "0 8px 40px rgba(0,0,0,0.10)",
+                "0 0 0px rgba(0,0,0,0.0)",
+              ],
+            }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          />
         </motion.div>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter mb-6 max-w-5xl leading-tight text-white"
-        >
-          The Autonomous <span className="text-white/60">Multi-Agent</span> AI Platform for Software Engineering Sector
-        </motion.h1>
-
+        {/* DotX wordmark */}
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-          className="text-lg md:text-xl text-neutral-400 max-w-3xl mb-8 leading-relaxed"
+          transition={{ duration: 0.5, delay: 0.5 }}
+          className="text-xs font-mono font-black uppercase tracking-[0.4em] text-neutral-400 mb-10"
         >
-          DotX automates the complete software development lifecycle using intelligent AI agents—from requirement analysis to planning, coding, testing, documentation, debugging, and deployment.
+          DotX
         </motion.p>
 
-        {/* Buttons (Moved up) */}
-        <div className="flex flex-col sm:flex-row items-center gap-4 mb-12">
-          <button className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-black font-semibold rounded-xl overflow-hidden transition-all hover:scale-105 active:scale-95">
-            <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-black/10 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]" />
-            <Download className="w-5 h-5" />
+        {/* Scramble headline */}
+        <motion.h1
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3, delay: 0.7 }}
+          className="text-5xl md:text-7xl lg:text-[6.5rem] font-black tracking-tighter mb-6 leading-[1.05] text-black uppercase w-full"
+        >
+          {WORDS.map((word, i) => (
+            <div key={i} className="block">
+              <ScrambleLine text={word} delay={900 + i * 350} />
+            </div>
+          ))}
+        </motion.h1>
+
+        {/* Subtitle */}
+        <motion.p
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 2.0 }}
+          className="text-sm md:text-base text-neutral-500 max-w-lg mb-10 leading-relaxed font-mono"
+        >
+          An autonomous AI platform covering the complete software development lifecycle — from requirements to deployment.
+        </motion.p>
+
+        {/* Buttons */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 2.3 }}
+          className="flex flex-col sm:flex-row items-center gap-4"
+        >
+          <button className="w-full sm:w-auto clip-button bg-black text-white px-8 py-4 font-bold uppercase text-xs tracking-widest flex items-center justify-center gap-3 hover:bg-neutral-800 transition-colors">
+            <Apple className="w-4 h-4" />
             Download for macOS
           </button>
-
-          <button className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/5 border border-white/20 text-white font-semibold rounded-xl hover:bg-white/10 transition-colors hover:scale-105 active:scale-95">
-            <Download className="w-5 h-5" />
+          <button className="w-full sm:w-auto clip-button bg-white text-black px-8 py-4 font-bold uppercase text-xs tracking-widest flex items-center justify-center gap-3 border border-black/20 hover:border-black hover:bg-black hover:text-white transition-all">
+            <Monitor className="w-4 h-4" />
             Download for Windows
           </button>
-          
-          <button className="inline-flex items-center justify-center gap-2 px-4 py-4 text-neutral-400 font-medium hover:text-white transition-colors sm:ml-2">
-            View Documentation
-            <ChevronRight className="w-4 h-4" />
-          </button>
-        </div>
-
-        {/* Dashboard mockup preview (Moved down below fold) */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 1, ease: "easeOut" }}
-          className="mt-48 md:mt-64 w-full max-w-6xl relative"
-        >
-          <div className="absolute -inset-1 bg-gradient-to-b from-white/20 to-transparent blur-2xl opacity-30" />
-          <div className="relative rounded-xl md:rounded-2xl border border-white/20 shadow-2xl overflow-hidden bg-[#050505]">
-            <img 
-              src="/screenshot.jpeg" 
-              alt="DotX Dashboard Interface" 
-              className="w-[calc(100%+16px)] max-w-none h-auto -mt-8 md:-mt-10"
-            />
-          </div>
         </motion.div>
 
-        {/* Lifecycle stages pills (Moved down below fold) */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="flex flex-wrap justify-center gap-3 max-w-3xl mt-48 mb-12"
-        >
-          {lifecycleStages.map((stage, i) => (
-            <motion.span
-              key={stage}
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.1 }}
-              className="px-4 py-1.5 bg-white/[0.03] border border-white/10 rounded-full text-sm text-neutral-300 shadow-sm backdrop-blur-md hover:bg-white/10 hover:text-white transition-colors cursor-default"
-            >
-              {stage}
-            </motion.span>
-          ))}
-        </motion.div>
       </div>
-      
-      <style dangerouslySetInnerHTML={{__html: `
-        @keyframes shimmer {
-          100% {
-            transform: translateX(100%);
-          }
-        }
-      `}} />
+
+      {/* Subtle corner marks */}
+      <div className="absolute top-6 left-6 w-4 h-4 border-t border-l border-black/20 pointer-events-none" />
+      <div className="absolute top-6 right-6 w-4 h-4 border-t border-r border-black/20 pointer-events-none" />
+      <div className="absolute bottom-6 left-6 w-4 h-4 border-b border-l border-black/20 pointer-events-none" />
+      <div className="absolute bottom-6 right-6 w-4 h-4 border-b border-r border-black/20 pointer-events-none" />
+
     </section>
   );
 }

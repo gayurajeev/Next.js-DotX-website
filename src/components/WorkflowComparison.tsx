@@ -1,172 +1,196 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Clock, CheckCircle2, Zap, AlertTriangle, ChevronRight, RefreshCcw } from "lucide-react";
+import { motion, AnimatePresence, useInView } from "framer-motion";
+import { useRef, useEffect, useState } from "react";
+
+const phases = [
+  { label: "Requirements",  oldDelay: 1200, dotxDelay: 300,  oldBlock: "Manual meetings" },
+  { label: "Architecture",  oldDelay: 1600, dotxDelay: 300,  oldBlock: "Alignment overhead" },
+  { label: "Development",   oldDelay: 2400, dotxDelay: 400,  oldBlock: "Siloed engineers" },
+  { label: "Testing",       oldDelay: 1800, dotxDelay: 300,  oldBlock: "Late-stage bugs" },
+  { label: "Deployment",    oldDelay: 1400, dotxDelay: 250,  oldBlock: "Manual release" },
+];
+
+const oldStarts = phases.reduce<number[]>((acc, p, i) => {
+  acc.push(i === 0 ? 600 : acc[i - 1] + phases[i - 1].oldDelay + 200);
+  return acc;
+}, []);
+const dotxStarts = phases.reduce<number[]>((acc, p, i) => {
+  acc.push(i === 0 ? 600 : acc[i - 1] + phases[i - 1].dotxDelay + 80);
+  return acc;
+}, []);
+
+const totalOldTime = oldStarts[phases.length - 1] + phases[phases.length - 1].oldDelay + 800;
+const loopDuration = totalOldTime + 2000;
+
+type PhaseState = "idle" | "running" | "done";
 
 export default function WorkflowComparison() {
-  const [isDotXMode, setIsDotXMode] = useState(true);
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true });
+  const [tick, setTick] = useState(0);
+  const [oldStatuses, setOldStatuses] = useState<PhaseState[]>(phases.map(() => "idle"));
+  const [dotxStatuses, setDotxStatuses] = useState<PhaseState[]>(phases.map(() => "idle"));
+  const [dotxDone, setDotxDone] = useState(false);
+  const [oldDone, setOldDone] = useState(false);
+
+  useEffect(() => {
+    if (!inView) return;
+    const timers: ReturnType<typeof setTimeout>[] = [];
+    setOldStatuses(phases.map(() => "idle"));
+    setDotxStatuses(phases.map(() => "idle"));
+    setDotxDone(false);
+    setOldDone(false);
+
+    phases.forEach((p, i) => {
+      timers.push(setTimeout(() => {
+        setOldStatuses((prev) => { const n = [...prev]; n[i] = "running"; return n; });
+      }, oldStarts[i]));
+      timers.push(setTimeout(() => {
+        setOldStatuses((prev) => { const n = [...prev]; n[i] = "done"; return n; });
+        if (i === phases.length - 1) setOldDone(true);
+      }, oldStarts[i] + p.oldDelay));
+    });
+
+    phases.forEach((p, i) => {
+      timers.push(setTimeout(() => {
+        setDotxStatuses((prev) => { const n = [...prev]; n[i] = "running"; return n; });
+      }, dotxStarts[i]));
+      timers.push(setTimeout(() => {
+        setDotxStatuses((prev) => { const n = [...prev]; n[i] = "done"; return n; });
+        if (i === phases.length - 1) setDotxDone(true);
+      }, dotxStarts[i] + p.dotxDelay));
+    });
+
+    const loopTimer = setTimeout(() => setTick((t) => t + 1), loopDuration);
+    timers.push(loopTimer);
+    return () => timers.forEach(clearTimeout);
+  }, [inView, tick]);
 
   return (
-    <section className="py-32 relative bg-[#050505] border-t border-white/10 overflow-hidden">
-      <div className="container mx-auto px-4 max-w-5xl relative z-10">
-        
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white tracking-tight">The Old Way vs. The DotX Way</h2>
-          <p className="text-neutral-400 text-lg max-w-2xl mx-auto mb-10">
-            See how autonomous agent orchestration eliminates bottlenecks and transforms weeks of labor into minutes of computation.
-          </p>
+    <section ref={ref} className="py-16 md:py-24 bg-white border-y border-black/10">
+      <div className="container mx-auto px-4 md:px-6 max-w-5xl">
 
-          {/* Custom Toggle Switch */}
-          <div className="inline-flex items-center p-1.5 bg-[#0a0a0a] rounded-full border border-white/10 relative">
-            <button
-              onClick={() => setIsDotXMode(false)}
-              className={`relative z-10 px-8 py-3 text-sm font-semibold rounded-full transition-colors ${
-                !isDotXMode ? "text-black" : "text-neutral-500 hover:text-white"
-              }`}
-            >
-              Traditional Workflow
-            </button>
-            <button
-              onClick={() => setIsDotXMode(true)}
-              className={`relative z-10 px-8 py-3 text-sm font-semibold rounded-full transition-colors flex items-center gap-2 ${
-                isDotXMode ? "text-black" : "text-neutral-500 hover:text-white"
-              }`}
-            >
-              <Zap className="w-4 h-4" />
-              DotX Autonomous Flow
-            </button>
-            
-            {/* Animated Toggle Indicator */}
-            <motion.div
-              layout
-              transition={{ type: "spring", stiffness: 400, damping: 30 }}
-              className="absolute top-1.5 bottom-1.5 w-[calc(50%-6px)] bg-white rounded-full z-0"
-              initial={false}
-              animate={{
-                left: isDotXMode ? "calc(50% + 4px)" : "6px",
-              }}
-            />
-          </div>
+        <div className="text-center mb-10 md:mb-14">
+          <p className="font-mono text-xs font-bold uppercase tracking-widest text-neutral-400 mb-2">Live Comparison</p>
+          <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-black">
+            The Old Way vs. DotX
+          </h2>
         </div>
 
-        {/* Dynamic Workflow Visualization */}
-        <div className="relative rounded-3xl border border-white/10 bg-black p-8 md:p-12 overflow-hidden shadow-2xl min-h-[400px]">
-          
-          <AnimatePresence mode="wait">
-            {!isDotXMode ? (
-              <motion.div
-                key="traditional"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
-                transition={{ duration: 0.4 }}
-                className="flex flex-col gap-8"
-              >
-                <div className="flex items-center justify-between text-neutral-500 text-sm mb-4">
-                  <span className="flex items-center gap-2"><Clock className="w-4 h-4" /> Timeline: 2-4 Weeks</span>
-                  <span className="flex items-center gap-2 text-red-400/50"><AlertTriangle className="w-4 h-4" /> High Friction</span>
-                </div>
-                
-                <div className="space-y-4">
-                  <div className="flex items-start gap-4 p-4 border border-red-500/10 rounded-xl bg-red-500/5 opacity-50">
-                    <div className="w-8 h-8 rounded-full bg-[#111] flex items-center justify-center shrink-0 border border-white/10 text-xs">1</div>
-                    <div>
-                      <h4 className="text-white font-medium mb-1">Write PRD & Wait for Approvals</h4>
-                      <p className="text-sm text-neutral-500">Endless meetings and manual documentation alignment.</p>
+        {/* Race Grid — stacks on mobile */}
+        <div className="border border-black/15 overflow-hidden" style={{ boxShadow: "2px 2px 0 rgba(0,0,0,0.06)" }}>
+
+          {/* Headers */}
+          <div className="grid grid-cols-2">
+            <div className="border-r border-b border-black/10 px-4 md:px-8 py-3 bg-neutral-50">
+              <p className="font-black font-mono text-xs uppercase tracking-widest text-neutral-400">Traditional Dev</p>
+            </div>
+            <div className="border-b border-black/10 px-4 md:px-8 py-3 bg-black">
+              <p className="font-black font-mono text-xs uppercase tracking-widest text-white">DotX Platform</p>
+            </div>
+          </div>
+
+          {/* Phase rows */}
+          {phases.map((phase, i) => {
+            const oldStatus = oldStatuses[i];
+            const dotxStatus = dotxStatuses[i];
+            const isLastRow = i === phases.length - 1;
+            return (
+              <div key={i} className="grid grid-cols-2">
+                {/* Old Way Cell */}
+                <div className={`border-r ${isLastRow ? "" : "border-b"} border-black/10 px-4 md:px-8 py-4 min-h-[64px] flex flex-col justify-center bg-neutral-50 relative overflow-hidden`}>
+                  <div className="flex items-center gap-2 md:gap-3">
+                    <div className={`w-4 h-4 border shrink-0 flex items-center justify-center transition-all ${
+                      oldStatus === "idle" ? "border-black/20" :
+                      oldStatus === "running" ? "border-black" :
+                      "border-black bg-black"
+                    }`}>
+                      {oldStatus === "running" && (
+                        <motion.div className="w-1.5 h-1.5 bg-black" animate={{ scale: [1, 0.4, 1] }} transition={{ duration: 0.6, repeat: Infinity }} />
+                      )}
+                      {oldStatus === "done" && (
+                        <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 12 12">
+                          <polyline points="2,6 5,9 10,3" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      )}
+                    </div>
+                    <div className="min-w-0">
+                      <p className={`font-black font-mono text-xs uppercase truncate transition-colors ${oldStatus === "idle" ? "text-neutral-300" : "text-black"}`}>
+                        {phase.label}
+                      </p>
+                      {oldStatus === "running" && (
+                        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="font-mono text-[10px] text-neutral-400 mt-0.5 hidden sm:block">
+                          ⚠ {phase.oldBlock}
+                        </motion.p>
+                      )}
                     </div>
                   </div>
-                  
-                  <div className="flex items-start gap-4 p-4 border border-red-500/10 rounded-xl bg-red-500/5 opacity-50">
-                    <div className="w-8 h-8 rounded-full bg-[#111] flex items-center justify-center shrink-0 border border-white/10 text-xs">2</div>
-                    <div>
-                      <h4 className="text-white font-medium mb-1">Human Coding (Bottleneck)</h4>
-                      <p className="text-sm text-neutral-500">Developers manually write code, often introducing typos or missing edge cases.</p>
+                  {oldStatus === "running" && (
+                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-black/10">
+                      <motion.div className="h-full bg-black/30" initial={{ width: "0%" }} animate={{ width: "100%" }} transition={{ duration: phase.oldDelay / 1000, ease: "linear" }} />
                     </div>
-                  </div>
-
-                  <div className="flex items-start gap-4 p-4 border border-red-500/10 rounded-xl bg-red-500/5 opacity-50">
-                    <div className="w-8 h-8 rounded-full bg-[#111] flex items-center justify-center shrink-0 border border-white/10 text-xs">3</div>
-                    <div>
-                      <h4 className="text-white font-medium mb-1 flex items-center gap-2">QA Testing <RefreshCcw className="w-3 h-3 text-red-400" /></h4>
-                      <p className="text-sm text-neutral-500">Bugs are found, tickets sent back to developers. Repeat cycle.</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-4 p-4 border border-red-500/10 rounded-xl bg-red-500/5 opacity-50">
-                    <div className="w-8 h-8 rounded-full bg-[#111] flex items-center justify-center shrink-0 border border-white/10 text-xs">4</div>
-                    <div>
-                      <h4 className="text-white font-medium mb-1">Manual Deployment</h4>
-                      <p className="text-sm text-neutral-500">DevOps engineers configure environments and manually push to production.</p>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ) : (
-              <motion.div
-                key="dotx"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.4 }}
-                className="flex flex-col gap-8 h-full"
-              >
-                <div className="flex items-center justify-between text-neutral-400 text-sm mb-4">
-                  <span className="flex items-center gap-2 text-white font-medium"><Zap className="w-4 h-4 fill-white" /> Timeline: ~5 Minutes</span>
-                  <span className="flex items-center gap-2 text-green-400"><CheckCircle2 className="w-4 h-4" /> Zero Friction</span>
-                </div>
-                
-                {/* Parallel Tracks Visualization */}
-                <div className="relative flex-1 bg-[#0a0a0a] border border-white/10 rounded-2xl p-6 overflow-hidden">
-                  
-                  {/* Glowing background */}
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-white/10 rounded-full blur-[80px]" />
-
-                  <div className="relative z-10 flex flex-col md:flex-row gap-6 items-stretch">
-                    
-                    {/* Prompt */}
-                    <div className="flex-1 flex flex-col items-center justify-center text-center p-6 border border-white/20 rounded-xl bg-white/5 backdrop-blur-sm">
-                      <div className="w-10 h-10 rounded-full bg-white text-black flex items-center justify-center mb-4">
-                        <span className="font-bold">1</span>
-                      </div>
-                      <h4 className="text-white font-semibold mb-2">Provide Prompt</h4>
-                      <p className="text-sm text-neutral-400">Describe what you want to build in plain English.</p>
-                    </div>
-
-                    <div className="hidden md:flex items-center justify-center">
-                      <ChevronRight className="w-6 h-6 text-white/30" />
-                    </div>
-
-                    {/* Agent Swarm */}
-                    <div className="flex-[2] grid grid-cols-2 gap-4">
-                      <div className="p-4 border border-white/10 rounded-xl bg-white/[0.02] relative overflow-hidden group">
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full animate-[shimmer_2s_infinite]" />
-                        <h5 className="text-sm font-semibold text-white mb-1">Planning Agent</h5>
-                        <p className="text-xs text-neutral-500">Auto-generating PRD</p>
-                      </div>
-                      <div className="p-4 border border-white/10 rounded-xl bg-white/[0.02] relative overflow-hidden group">
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full animate-[shimmer_2s_infinite_0.5s]" />
-                        <h5 className="text-sm font-semibold text-white mb-1">Coding Agent</h5>
-                        <p className="text-xs text-neutral-500">Writing deterministic code</p>
-                      </div>
-                      <div className="p-4 border border-white/10 rounded-xl bg-white/[0.02] relative overflow-hidden group">
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full animate-[shimmer_2s_infinite_1s]" />
-                        <h5 className="text-sm font-semibold text-white mb-1">Testing Agent</h5>
-                        <p className="text-xs text-neutral-500">Validating edge cases</p>
-                      </div>
-                      <div className="p-4 border border-white/10 rounded-xl bg-white/[0.02] relative overflow-hidden group">
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full animate-[shimmer_2s_infinite_1.5s]" />
-                        <h5 className="text-sm font-semibold text-white mb-1">DevOps Agent</h5>
-                        <p className="text-xs text-neutral-500">Packaging for staging</p>
-                      </div>
-                    </div>
-
-                  </div>
+                  )}
                 </div>
 
-              </motion.div>
-            )}
-          </AnimatePresence>
+                {/* DotX Cell */}
+                <div className={`${isLastRow ? "" : "border-b border-white/10"} px-4 md:px-8 py-4 min-h-[64px] flex flex-col justify-center bg-black relative overflow-hidden`}>
+                  <div className="flex items-center gap-2 md:gap-3">
+                    <div className={`w-4 h-4 border shrink-0 flex items-center justify-center transition-all ${
+                      dotxStatus === "idle" ? "border-white/20" :
+                      dotxStatus === "running" ? "border-white" :
+                      "border-white bg-white"
+                    }`}>
+                      {dotxStatus === "running" && (
+                        <motion.div className="w-1.5 h-1.5 bg-white" animate={{ scale: [1, 0.4, 1] }} transition={{ duration: 0.3, repeat: Infinity }} />
+                      )}
+                      {dotxStatus === "done" && (
+                        <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 12 12">
+                          <polyline points="2,6 5,9 10,3" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      )}
+                    </div>
+                    <div className="min-w-0">
+                      <p className={`font-black font-mono text-xs uppercase truncate transition-colors ${dotxStatus === "idle" ? "text-white/20" : "text-white"}`}>
+                        {phase.label}
+                      </p>
+                    </div>
+                  </div>
+                  {dotxStatus === "running" && (
+                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-white/10">
+                      <motion.div className="h-full bg-white" initial={{ width: "0%" }} animate={{ width: "100%" }} transition={{ duration: phase.dotxDelay / 1000, ease: "linear" }} />
+                    </div>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+
+          {/* Footer result row */}
+          <div className="grid grid-cols-2 border-t border-black/10">
+            <div className="border-r border-black/10 px-4 md:px-8 py-4 bg-neutral-100 min-h-[52px] flex items-center">
+              <AnimatePresence>
+                {oldDone ? (
+                  <motion.p initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="font-mono text-xs font-black uppercase text-neutral-400 tracking-widest">
+                    Done — eventually.
+                  </motion.p>
+                ) : (
+                  <p className="font-mono text-xs font-bold text-neutral-300 uppercase tracking-widest">Working...</p>
+                )}
+              </AnimatePresence>
+            </div>
+            <div className="px-4 md:px-8 py-4 bg-black min-h-[52px] flex items-center">
+              <AnimatePresence>
+                {dotxDone ? (
+                  <motion.p initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="font-black text-xs uppercase tracking-widest text-white">
+                    ✓ Completed with DotX
+                  </motion.p>
+                ) : (
+                  <p className="font-mono text-xs font-bold text-white/20 uppercase tracking-widest">Initializing...</p>
+                )}
+              </AnimatePresence>
+            </div>
+          </div>
 
         </div>
       </div>

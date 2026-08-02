@@ -1,19 +1,39 @@
 export default function Footer() {
   return (
-    <footer className="py-12 border-t border-white/10 bg-black">
-      <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-neutral-500">
-        <div className="flex items-center gap-2">
-          <img src="/logo.jpeg" alt="DotX Logo" className="h-6 w-auto rounded-md" />
-          <span className="font-semibold text-white ml-2">DotX</span>
-          <span>© {new Date().getFullYear()}</span>
-        </div>
+    <footer className="py-10 md:py-12 border-t border-black/20 bg-black text-white">
+      <div className="container mx-auto px-4 md:px-6 max-w-7xl flex flex-col md:flex-row justify-between items-start gap-8 md:gap-10">
         
-        <div className="flex gap-6">
-          <a href="#" className="hover:text-white transition-colors">Documentation</a>
-          <a href="#" className="hover:text-white transition-colors">Changelog</a>
-          <a href="#" className="hover:text-white transition-colors">Privacy</a>
-          <a href="#" className="hover:text-white transition-colors">Terms</a>
+        <div className="flex flex-col gap-3">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 overflow-hidden shrink-0 rounded-lg">
+              <img src="/logo.jpeg" alt="DotX Logo" className="w-full h-full object-cover" />
+            </div>
+            <span className="font-black tracking-tighter text-xl">DotX</span>
+          </div>
+          <p className="font-mono text-xs text-neutral-500 max-w-xs font-bold uppercase leading-relaxed">
+            Autonomous AI Platform for Software Development.
+          </p>
+          <span className="font-mono text-xs text-neutral-600 font-bold">© {new Date().getFullYear()} DotX</span>
         </div>
+
+        <div className="flex flex-wrap gap-8 md:gap-12 font-mono text-sm font-bold uppercase">
+          <div className="flex flex-col gap-3">
+            <p className="text-neutral-500 text-xs tracking-widest mb-1">Platform</p>
+            <a href="#" className="text-neutral-400 hover:text-white transition-colors">DotX</a>
+            <a href="#" className="text-neutral-400 hover:text-white transition-colors">Architecture</a>
+          </div>
+          <div className="flex flex-col gap-3">
+            <p className="text-neutral-500 text-xs tracking-widest mb-1">Resources</p>
+            <a href="#" className="text-neutral-400 hover:text-white transition-colors">Documentation</a>
+            <a href="#" className="text-neutral-400 hover:text-white transition-colors">GitHub</a>
+          </div>
+          <div className="flex flex-col gap-3">
+            <p className="text-neutral-500 text-xs tracking-widest mb-1">Legal</p>
+            <a href="#" className="text-neutral-400 hover:text-white transition-colors">Privacy</a>
+            <a href="#" className="text-neutral-400 hover:text-white transition-colors">Terms</a>
+          </div>
+        </div>
+
       </div>
     </footer>
   );

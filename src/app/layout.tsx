@@ -8,8 +8,13 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "DotX | The Future of Development",
-  description: "A premium AI development platform designed for speed, intelligence, and beautiful aesthetics.",
+  title: "DotX | Autonomous AI Platform for Development & Enterprise",
+  description: "DotX covers the complete software development lifecycle with autonomous AI agents — from requirements analysis to deployment.",
+  icons: {
+    icon: "/logo.jpeg",
+    shortcut: "/logo.jpeg",
+    apple: "/logo.jpeg",
+  },
 };
 
 export default function RootLayout({
@@ -18,8 +23,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
-      <body className={`${inter.variable} antialiased selection:bg-brand-purple selection:text-white`}>
+    <html lang="en">
+      <body className={`${inter.variable} antialiased`}>
         {children}
       </body>
     </html>

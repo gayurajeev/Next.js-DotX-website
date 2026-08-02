@@ -2,24 +2,32 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown } from "lucide-react";
+import { Plus, Minus } from "lucide-react";
 
 const faqs = [
   {
-    question: "Is DotX compatible with my existing codebase?",
-    answer: "Yes, DotX seamlessly integrates with existing repositories. Our agents can parse your current architecture and adapt to your established coding standards automatically."
+    question: "What is DotX?",
+    answer: "DotX is an autonomous AI platform that manages the complete software development lifecycle — from analyzing requirements documents (PRDs, FRDs, NFRs) to generating implementation plans, coordinating specialized AI agents, coding, testing, debugging, documentation, deployment, and project management."
   },
   {
-    question: "What programming languages are supported?",
-    answer: "DotX natively supports Python, TypeScript, Go, Rust, and C++. Support for Java, Ruby, and PHP is available through our community extensions."
+    question: "What is EnterpriseX?",
+    answer: "EnterpriseX extends DotX's autonomous agent architecture to enterprise environments. It enables intelligent workflow automation, business process management, decision support, manufacturing optimization, logistics coordination, resource planning, and digital transformation across multiple industries."
   },
   {
-    question: "How secure is my code when using DotX?",
-    answer: "Extremely secure. All processing can be done locally or through your secure enterprise VPC. We never train our base models on your proprietary code."
+    question: "What AI models does the platform use?",
+    answer: "DotX integrates multiple Large Language Models including GPT, Claude, Gemini, and custom AI models. The platform intelligently selects the most capable model for each specific task, ensuring maximum reasoning quality across the development lifecycle."
   },
   {
-    question: "Do I need to prompt the AI manually?",
-    answer: "While you can provide manual guidance, DotX is designed to work autonomously from your architectural documents (PRD, FRD, NFR), minimizing the need for manual prompting."
+    question: "What is the technology stack?",
+    answer: "The backend is built on ASP.NET Core (.NET), Spring Boot, and FastAPI. The desktop app uses Avalonia UI for cross-platform support. Supporting technologies include PostgreSQL, pgvector, Redis, Docker, MinIO, SignalR/WebSockets, and GitHub Actions — following a scalable partial microservice architecture."
+  },
+  {
+    question: "How do the AI agents collaborate?",
+    answer: "Specialized agents handle distinct responsibilities — planning, reasoning, execution, monitoring, and continuous learning. They communicate in real time via SignalR and WebSockets, coordinating autonomously without manual developer intervention at each handoff."
+  },
+  {
+    question: "Which platforms does DotX run on?",
+    answer: "DotX's desktop client is built with Avalonia UI, providing a native cross-platform experience on Windows, macOS, and Linux — with no browser or Electron overhead."
   }
 ];
 
@@ -27,29 +35,28 @@ export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="py-32 bg-[#050505] border-t border-white/5">
-      <div className="container mx-auto px-4 max-w-3xl">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4 text-white">Frequently Asked Questions</h2>
-          <p className="text-neutral-400">Everything you need to know about the product.</p>
+    <section className="py-16 md:py-32 bg-white grid-bg">
+      <div className="container mx-auto px-4 md:px-6 max-w-4xl">
+        <div className="text-left mb-10 md:mb-16 border-l-2 border-black/20 pl-5">
+          <h2 className="text-4xl md:text-5xl font-black mb-4 text-black uppercase tracking-tighter">
+            Questions
+          </h2>
+          <p className="font-mono text-sm font-bold text-neutral-500">THINGS PEOPLE USUALLY ASK ABOUT DOTX.</p>
         </div>
 
-        <div className="space-y-4">
+        <div className="border-t border-black/10">
           {faqs.map((faq, index) => {
             const isOpen = openIndex === index;
             return (
-              <div 
-                key={index}
-                className={`border rounded-xl overflow-hidden transition-colors ${
-                  isOpen ? "border-white/30 bg-white/[0.04]" : "border-white/10 bg-transparent hover:border-white/20"
-                }`}
-              >
+              <div key={index} className="border-b border-black/10 bg-white">
                 <button
-                  className="w-full px-6 py-5 flex items-center justify-between text-left"
+                  className="w-full px-6 py-6 flex items-center justify-between text-left hover:bg-black hover:text-white transition-colors group"
                   onClick={() => setOpenIndex(isOpen ? null : index)}
                 >
-                  <span className="font-medium text-lg text-white">{faq.question}</span>
-                  <ChevronDown className={`w-5 h-5 text-neutral-400 transition-transform ${isOpen ? "rotate-180" : ""}`} />
+                  <span className="font-black text-lg uppercase tracking-tight">{faq.question}</span>
+                  <div className="w-8 h-8 border-2 border-current flex items-center justify-center shrink-0 ml-4">
+                    {isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+                  </div>
                 </button>
                 <AnimatePresence>
                   {isOpen && (
@@ -57,9 +64,10 @@ export default function FAQ() {
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      className="overflow-hidden"
+                      transition={{ duration: 0.25 }}
+                      className="overflow-hidden bg-neutral-100 border-t-2 border-black"
                     >
-                      <div className="px-6 pb-5 text-neutral-400">
+                      <div className="px-6 py-8 font-mono text-black font-bold max-w-3xl leading-relaxed">
                         {faq.answer}
                       </div>
                     </motion.div>

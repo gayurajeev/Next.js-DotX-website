@@ -1,199 +1,205 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Brain, Network, Code2, TestTube, FileText, Rocket, Play, CheckCircle2 } from "lucide-react";
+import { Play, CheckCircle2, Loader2 } from "lucide-react";
+
+type AgentStatus = "idle" | "running" | "done";
 
 const agents = [
-  { id: 'planning', icon: Brain, label: 'Planning Agent', desc: 'Analyze requirements' },
-  { id: 'architecture', icon: Network, label: 'Architecture Agent', desc: 'Design the solution' },
-  { id: 'coding', icon: Code2, label: 'Coding Agent', desc: 'Generate code' },
-  { id: 'testing', icon: TestTube, label: 'Testing Agent', desc: 'Execute tests' },
-  { id: 'docs', icon: FileText, label: 'Documentation Agent', desc: 'Generate documentation' },
-  { id: 'deployment', icon: Rocket, label: 'Deployment Agent', desc: 'Prepare deployment' },
+  {
+    id: "requirements",
+    label: "Requirements Agent",
+    task: "Parsing project requirements...",
+    output: "✓ Entities: Product, Order, Supplier, Stock. Constraints: REST API, PostgreSQL, JWT Auth.",
+  },
+  {
+    id: "planning",
+    label: "Planning Agent",
+    task: "Generating implementation plan...",
+    output: "✓ 4-phase plan created: Schema → API → Business Logic → Deployment pipeline.",
+  },
+  {
+    id: "codegen",
+    label: "Code Generation Agent",
+    task: "Writing code across modules...",
+    output: "✓ Generated: 12 API endpoints, 6 models, 4 services, unit test suite.",
+  },
+  {
+    id: "testing",
+    label: "Testing Agent",
+    task: "Running automated test suite...",
+    output: "✓ 48/48 tests passed. 0 failures. Coverage: 94%.",
+  },
+  {
+    id: "deployment",
+    label: "Deployment Agent",
+    task: "Building Docker image & pushing pipeline...",
+    output: "✓ Deployed to production. Endpoint: https://inventory.dotx.dev",
+  },
 ];
 
-export default function HowItWorks() {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [activeStep, setActiveStep] = useState(-1);
+type DemoState = "idle" | "running" | "completed";
 
-  useEffect(() => {
-    let interval: NodeJS.Timeout;
-    
-    if (isPlaying) {
-      // Loop the animation smoothly
-      interval = setInterval(() => {
-        setActiveStep((prev) => {
-          if (prev >= agents.length) {
-            return -1; // Reset to start
-          }
-          return prev + 1;
-        });
-      }, 800); // 0.8s per step
+export default function HowItWorks() {
+  const [demoState, setDemoState] = useState<DemoState>("idle");
+  const [activeAgent, setActiveAgent] = useState<number>(-1);
+  const [agentStatuses, setAgentStatuses] = useState<AgentStatus[]>(
+    agents.map(() => "idle")
+  );
+
+  const runDemo = async () => {
+    if (demoState === "running") return;
+    // Reset
+    setDemoState("running");
+    setActiveAgent(-1);
+    setAgentStatuses(agents.map(() => "idle"));
+
+    for (let i = 0; i < agents.length; i++) {
+      setActiveAgent(i);
+      setAgentStatuses((prev) => {
+        const next = [...prev];
+        next[i] = "running";
+        return next;
+      });
+      // Simulate agent working time
+      await new Promise((r) => setTimeout(r, 500));
+      setAgentStatuses((prev) => {
+        const next = [...prev];
+        next[i] = "done";
+        return next;
+      });
+      await new Promise((r) => setTimeout(r, 300));
     }
 
-    return () => clearInterval(interval);
-  }, [isPlaying]);
+    setActiveAgent(-1);
+    setDemoState("completed");
 
-  const handleRunDemo = () => {
-    setIsPlaying(true);
-    setActiveStep(0);
+    // Auto-restart after a short pause
+    await new Promise((r) => setTimeout(r, 1200));
+    runDemo();
+  };
+
+  const reset = () => {
+    setDemoState("idle");
+    setActiveAgent(-1);
+    setAgentStatuses(agents.map(() => "idle"));
   };
 
   return (
-    <section className="py-32 relative bg-[#000000] border-t border-white/10 overflow-hidden">
-      {/* Background glow when playing */}
-      <div 
-        className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full blur-[120px] pointer-events-none transition-opacity duration-1000 ${isPlaying ? 'bg-white/5 opacity-50' : 'opacity-0'}`} 
-      />
+    <section className="py-16 md:py-32 relative bg-white grid-bg">
+      <div className="container mx-auto px-4 md:px-6 max-w-5xl relative z-10">
 
-      <div className="container mx-auto px-4 max-w-7xl relative z-10">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">How DotX Works</h2>
-          <p className="text-neutral-400 text-lg max-w-2xl mx-auto">
-            Experience the autonomous multi-agent workflow in real-time.
+        {/* Header */}
+        <div className="text-left mb-12 border-l-2 border-black/20 pl-8">
+          <h2 className="text-2xl md:text-5xl font-black mb-4 text-black tracking-tighter uppercase">
+            How DotX Works
+          </h2>
+          <p className="text-black font-mono text-sm max-w-xl font-bold">
+            CLICK RUN A DEMO — WATCH SPECIALIZED AGENTS TAKE A TASK FROM ZERO TO SHIPPED.
           </p>
         </div>
 
-        <div className="bg-[#050505] rounded-3xl border border-white/10 p-8 md:p-12 shadow-2xl relative overflow-hidden">
-          
-          {/* Initial Prompt Header */}
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-16 pb-8 border-b border-white/10">
-            <div className="flex flex-col items-start text-left w-full">
-              <span className="text-xs uppercase tracking-widest text-neutral-500 mb-2">Developer Request</span>
-              <div className="text-xl md:text-2xl font-mono text-white flex items-center gap-3">
-                <span className="text-white/50">&gt;</span>
-                "Build an Inventory Management System."
-                {!isPlaying && (
-                  <motion.span
-                    animate={{ opacity: [1, 0] }}
-                    transition={{ repeat: Infinity, duration: 0.8 }}
-                    className="w-3 h-6 bg-white inline-block ml-1"
-                  />
-                )}
-              </div>
+        {/* Demo Terminal */}
+        <div className="bg-white border border-black/15 overflow-hidden" style={{ boxShadow: "2px 2px 0 rgba(0,0,0,0.06)" }}>
+
+          {/* Terminal Header Bar */}
+          <div className="bg-black text-white flex items-center justify-between px-4 md:px-6 py-3 border-b border-black/30">
+            <div className="flex items-center gap-1.5">
+              <div className="w-2.5 h-2.5 bg-white/10 border border-white/20" />
+              <div className="w-2.5 h-2.5 bg-white/10 border border-white/20" />
+              <div className="w-2.5 h-2.5 bg-white/10 border border-white/20" />
             </div>
-            
-            {!isPlaying && (
-              <button 
-                onClick={handleRunDemo}
-                className="shrink-0 flex items-center gap-2 px-6 py-3 bg-white text-black font-semibold rounded-xl hover:scale-105 transition-transform"
-              >
-                <Play className="w-4 h-4 fill-black" />
-                Run Demo
-              </button>
-            )}
-            
-            {isPlaying && (
-              <div className="shrink-0 flex items-center gap-2 px-6 py-3 border border-white/20 text-white/50 rounded-xl">
-                <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
-                Running
-              </div>
-            )}
+            <span className="font-mono text-[10px] font-bold text-neutral-500 uppercase tracking-widest hidden sm:block">
+              dotx-agent-runtime
+            </span>
+            <div className="w-16" />
           </div>
 
-          {/* Agents Workflow Grid */}
-          <div className="relative">
-            {/* Animated Connecting Line Background */}
-            <div className="absolute top-8 left-8 right-8 h-[2px] bg-white/5 hidden lg:block" />
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6 relative z-10">
-              {agents.map((agent, index) => {
-                const Icon = agent.icon;
-                const isActive = activeStep === index;
-                const isPast = activeStep > index;
-                
-                return (
-                  <div key={agent.id} className="flex flex-col items-center text-center relative group">
-                    {/* Connecting line for mobile/tablet */}
-                    {index !== agents.length - 1 && (
-                      <div className="absolute top-[80px] left-1/2 w-[2px] h-6 bg-white/5 lg:hidden" />
-                    )}
+          <div className="p-4 md:p-8">
 
-                    <div className="relative mb-6">
-                      {/* Glow effect */}
-                      <AnimatePresence>
-                        {isActive && (
-                          <motion.div
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={{ opacity: 1, scale: 1.2 }}
-                            exit={{ opacity: 0, scale: 0.8 }}
-                            className="absolute inset-0 bg-white/20 rounded-2xl blur-xl"
-                          />
-                        )}
-                      </AnimatePresence>
-                      
-                      <div className={`w-16 h-16 rounded-2xl flex items-center justify-center relative z-10 border transition-all duration-500 ${
-                        isActive ? 'bg-white text-black border-white scale-110 shadow-[0_0_30px_rgba(255,255,255,0.3)]' :
-                        isPast ? 'bg-white/10 text-white border-white/20' : 
-                        'bg-[#0a0a0a] text-neutral-600 border-white/5'
+            {/* Task Prompt */}
+            <div className="flex items-start gap-3 mb-6 md:mb-8 border-b border-black/10 pb-4 md:pb-6">
+              <div>
+                <p className="font-mono font-black text-black text-sm md:text-lg leading-snug">
+                  DotX run <span className="bg-black text-white px-2 py-0.5 text-xs md:text-base">"Build an Inventory Management System"</span>
+                </p>
+              </div>
+            </div>
+
+            {/* Agents */}
+            <div className="flex flex-col gap-4 mb-8">
+              {agents.map((agent, i) => {
+                const status = agentStatuses[i];
+                return (
+                  <div
+                    key={agent.id}
+                    className={`border-2 px-5 py-4 transition-all duration-300 ${
+                      status === "running"
+                        ? "border-black bg-black/5"
+                        : status === "done"
+                        ? "border-black bg-black text-white"
+                        : "border-black/10 bg-transparent"
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      {status === "idle" && (
+                        <div className="w-4 h-4 border-2 border-black/20 shrink-0" />
+                      )}
+                      {status === "running" && (
+                        <Loader2 className="w-4 h-4 shrink-0 animate-spin text-black" />
+                      )}
+                      {status === "done" && (
+                        <CheckCircle2 className="w-4 h-4 shrink-0 text-white" />
+                      )}
+                      <span className={`font-black font-mono text-sm uppercase tracking-wider ${
+                        status === "idle" ? "text-neutral-400" : status === "done" ? "text-white" : "text-black"
                       }`}>
-                        <Icon className="w-6 h-6" />
-                        
-                        {/* Progress Ring for Active State */}
-                        {isActive && (
-                          <svg className="absolute -inset-2 w-20 h-20 -rotate-90">
-                            <circle cx="40" cy="40" r="38" className="stroke-white/20 stroke-[2px] fill-none" />
-                            <motion.circle 
-                              cx="40" cy="40" r="38" 
-                              className="stroke-white stroke-[2px] fill-none"
-                              initial={{ strokeDasharray: "0 239" }}
-                              animate={{ strokeDasharray: "239 239" }}
-                              transition={{ duration: 0.8, ease: "linear" }}
-                            />
-                          </svg>
-                        )}
-                      </div>
+                        {agent.label}
+                      </span>
                     </div>
-                    
-                    <h3 className={`font-semibold mb-2 transition-colors duration-300 ${
-                      isActive || isPast ? 'text-white' : 'text-neutral-500'
-                    }`}>
-                      {agent.label}
-                    </h3>
-                    <p className={`text-sm transition-colors duration-300 ${
-                      isActive ? 'text-neutral-300' : 'text-neutral-600'
-                    }`}>
-                      {agent.desc}
-                    </p>
-                    
-                    {/* Animated Line connecting to next agent (desktop) */}
-                    {index < agents.length - 1 && (
-                      <div className="hidden lg:block absolute top-8 left-[calc(50%+32px)] w-[calc(100%-64px)] h-[2px]">
-                        {isPast && (
-                          <motion.div
-                            initial={{ width: 0 }}
-                            animate={{ width: '100%' }}
-                            transition={{ duration: 0.5 }}
-                            className="h-full bg-white/40"
-                          />
-                        )}
-                      </div>
-                    )}
                   </div>
                 );
               })}
             </div>
-          </div>
 
-          {/* Success State */}
-          <div className="mt-16 h-16 flex items-center justify-center">
-            <AnimatePresence mode="wait">
-              {activeStep >= agents.length && (
+            {/* Completed Message */}
+            <AnimatePresence>
+              {demoState === "completed" && (
                 <motion.div
-                  initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                  initial={{ opacity: 0, y: 20, scale: 0.95 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  className="flex items-center gap-3 px-6 py-3 bg-white/10 border border-white/20 rounded-full text-white font-medium shadow-[0_0_40px_rgba(255,255,255,0.1)]"
+                  className="border-4 border-black bg-black text-white p-8 text-center brutal-shadow mb-8"
                 >
-                  <CheckCircle2 className="w-5 h-5 text-white" />
-                  Project Successfully Generated with DotX
+                  <p className="font-black text-3xl uppercase tracking-tighter">
+                    Project Completed with DotX
+                  </p>
                 </motion.div>
               )}
             </AnimatePresence>
-          </div>
 
+            {/* CTA Button */}
+            <div className="flex items-center gap-4">
+              {demoState === "idle" && (
+                <button
+                  onClick={runDemo}
+                  className="flex items-center gap-3 px-8 py-4 bg-black text-white font-black uppercase text-sm tracking-widest brutal-shadow-hover transition-all border-2 border-transparent hover:bg-white hover:text-black hover:border-black"
+                >
+                  <Play className="w-4 h-4" />
+                  Run a Demo
+                </button>
+              )}
+              {(demoState === "running" || demoState === "completed") && (
+                <div className="flex items-center gap-3 px-8 py-4 border-4 border-black font-black uppercase text-sm tracking-widest text-black opacity-60 cursor-not-allowed">
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Running...
+                </div>
+              )}
+            </div>
+
+          </div>
         </div>
+
       </div>
     </section>
   );
