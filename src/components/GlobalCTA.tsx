@@ -68,20 +68,20 @@ function WireframeGlobe() {
         for (let i = 0; i <= STEPS; i++) {
           pts.push(project(rotY(toXYZ(lat * Math.PI / 180, (i / STEPS) * Math.PI * 2), angle)));
         }
-        strokeArc(ctx, pts, "rgba(0,0,0,0.85)", "rgba(0,0,0,0.12)");
+        strokeArc(ctx, pts, "rgba(255,255,255,0.85)", "rgba(255,255,255,0.15)");
       }
       for (let lon = 0; lon < 360; lon += LON_STEP) {
         const pts = [];
         for (let i = 0; i <= STEPS; i++) {
           pts.push(project(rotY(toXYZ((i / STEPS) * Math.PI - Math.PI / 2, lon * Math.PI / 180), angle)));
         }
-        strokeArc(ctx, pts, "rgba(0,0,0,0.85)", "rgba(0,0,0,0.12)");
+        strokeArc(ctx, pts, "rgba(255,255,255,0.85)", "rgba(255,255,255,0.15)");
       }
       ctx.restore();
 
       ctx.beginPath();
       ctx.arc(cx, cy, R, 0, Math.PI * 2);
-      ctx.strokeStyle = "rgba(0,0,0,0.85)";
+      ctx.strokeStyle = "rgba(255,255,255,0.85)";
       ctx.lineWidth = 0.8;
       ctx.stroke();
 
@@ -93,7 +93,7 @@ function WireframeGlobe() {
     return () => cancelAnimationFrame(rafId);
   }, []);
 
-  return <canvas ref={canvasRef} className="block" />;
+  return <canvas ref={canvasRef} className="block max-w-full h-auto mx-auto" />;
 }
 
 export default function GlobalCTA() {

@@ -88,7 +88,7 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3, delay: 0.7 }}
-          className="text-xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-[4.5rem] 2xl:text-[5.5rem] font-black tracking-tight mb-6 leading-tight text-white uppercase w-full flex flex-row items-center justify-center gap-2.5 sm:gap-4 md:gap-6 whitespace-nowrap max-w-full px-2 pl-8 sm:pl-16 md:pl-24 lg:pl-32"
+          className="text-base sm:text-3xl md:text-5xl lg:text-6xl xl:text-[4.5rem] 2xl:text-[5.5rem] font-black tracking-tight mb-6 leading-tight text-white uppercase w-full flex flex-row items-center justify-center gap-1.5 sm:gap-4 md:gap-6 whitespace-nowrap max-w-full px-2 pl-4 sm:pl-12 md:pl-20 lg:pl-32"
         >
           <span className="flex-1 text-right">
             <ScrambleLine text={WORDS[0]} delay={900} />

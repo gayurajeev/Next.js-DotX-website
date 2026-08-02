@@ -119,185 +119,187 @@ export default function WorkflowComparison() {
           </h2>
         </div>
 
-        {/* 3-Column Comparison Grid */}
-        <div className="border border-black/15 overflow-hidden shadow-sm">
+        {/* 3-Column Comparison Grid with Mobile Horizontal Scroll */}
+        <div className="w-full overflow-x-auto pb-2">
+          <div className="min-w-[680px] md:min-w-0 border border-black/15 overflow-hidden shadow-sm">
 
-          {/* Headers */}
-          <div className="grid grid-cols-1 md:grid-cols-3">
-            {/* Column 1: Traditional Development (White Theme) */}
-            <div className="border-b border-r border-black/10 px-4 md:px-6 py-4 bg-white">
-              <span className="inline-block px-2 py-0.5 text-[10px] font-mono font-bold uppercase bg-black/5 text-neutral-600 mb-1">
-                Manual Workflow
-              </span>
-              <h3 className="font-black font-mono text-sm uppercase tracking-wider text-black">
-                Traditional Development
-              </h3>
-            </div>
-
-            {/* Column 2: Vibe Coding (Sleek Dark Theme) */}
-            <div className="border-b border-r border-white/10 px-4 md:px-6 py-4 bg-[#181818] text-white">
-              <span className="inline-block px-2 py-0.5 text-[10px] font-mono font-bold uppercase bg-white/10 text-neutral-300 mb-1 truncate max-w-full">
-                codex, claude code, antigravity, etc.
-              </span>
-              <h3 className="font-black font-mono text-sm uppercase tracking-wider text-white">
-                Vibe Coding
-              </h3>
-            </div>
-
-            {/* Column 3: DOTX Platform (Rich #59008C Violet Theme with Violet Column Borders) */}
-            <div className="border-b border-[#59008C]/60 md:border-l md:border-l-[#59008C]/80 px-4 md:px-6 py-4 bg-[#240038] text-white">
-              <span className="inline-block px-2 py-0.5 text-[10px] font-mono font-bold uppercase bg-[#59008C] text-white border border-[#59008C] mb-1">
-                Autonomous AI Platform
-              </span>
-              <h3 className="font-black font-mono text-sm uppercase tracking-wider text-[#f3e8ff]">
-                DOTX Platform
-              </h3>
-            </div>
-          </div>
-
-          {/* Phase Rows */}
-          {phases.map((phase, i) => {
-            const oldStatus = oldStatuses[i];
-            const vibeStatus = vibeStatuses[i];
-            const dotxStatus = dotxStatuses[i];
-            const isLastRow = i === phases.length - 1;
-
-            return (
-              <div key={i} className="grid grid-cols-1 md:grid-cols-3">
-
-                {/* 1. Traditional Development Cell (White) */}
-                <div className={`border-r ${isLastRow ? "" : "border-b"} border-black/10 px-4 md:px-6 py-3.5 min-h-[56px] flex flex-col justify-center bg-white relative overflow-hidden`}>
-                  <div className="flex items-center gap-3">
-                    <div className={`w-4 h-4 border shrink-0 flex items-center justify-center transition-all ${
-                      oldStatus === "idle" ? "border-black/20 text-black/20" :
-                      oldStatus === "running" ? "border-black bg-black/5 text-black" :
-                      "border-black bg-black text-white"
-                    }`}>
-                      {oldStatus === "running" && (
-                        <motion.div className="w-1.5 h-1.5 bg-black" animate={{ scale: [1, 0.4, 1] }} transition={{ duration: 0.6, repeat: Infinity }} />
-                      )}
-                      {oldStatus === "done" && (
-                        <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 12 12">
-                          <polyline points="2,6 5,9 10,3" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
-                      )}
-                      {oldStatus === "idle" && <span className="text-[9px]">☑</span>}
-                    </div>
-                    <p className={`font-mono text-xs font-bold transition-colors ${oldStatus === "idle" ? "text-neutral-400" : "text-black"}`}>
-                      {phase.old}
-                    </p>
-                  </div>
-                  {oldStatus === "running" && (
-                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-black/10">
-                      <motion.div className="h-full bg-black/40" initial={{ width: "0%" }} animate={{ width: "100%" }} transition={{ duration: STEP_DELAY / 1000, ease: "linear" }} />
-                    </div>
-                  )}
-                </div>
-
-                {/* 2. Vibe Coding Cell (Dark sleek bg-white/5 style color) */}
-                <div className={`border-r ${isLastRow ? "" : "border-b"} border-white/10 px-4 md:px-6 py-3.5 min-h-[56px] flex flex-col justify-center bg-[#121212] text-neutral-200 relative overflow-hidden`}>
-                  <div className="flex items-center gap-3">
-                    <div className={`w-4 h-4 border shrink-0 flex items-center justify-center transition-all ${
-                      vibeStatus === "idle" ? "border-white/20 text-white/20" :
-                      vibeStatus === "running" ? "border-white/40 bg-white/10 text-white" :
-                      "border-white bg-white text-black"
-                    }`}>
-                      {vibeStatus === "running" && (
-                        <motion.div className="w-1.5 h-1.5 bg-white" animate={{ scale: [1, 0.4, 1] }} transition={{ duration: 0.4, repeat: Infinity }} />
-                      )}
-                      {vibeStatus === "done" && (
-                        <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 12 12">
-                          <polyline points="2,6 5,9 10,3" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
-                      )}
-                      {vibeStatus === "idle" && <span className="text-[9px]">☑</span>}
-                    </div>
-                    <p className={`font-mono text-xs font-bold transition-colors ${vibeStatus === "idle" ? "text-neutral-500" : "text-neutral-200"}`}>
-                      {phase.vibe}
-                    </p>
-                  </div>
-                  {vibeStatus === "running" && (
-                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-white/10">
-                      <motion.div className="h-full bg-white/40" initial={{ width: "0%" }} animate={{ width: "100%" }} transition={{ duration: STEP_DELAY / 1000, ease: "linear" }} />
-                    </div>
-                  )}
-                </div>
-
-                {/* 3. DOTX Platform Cell (Rich #59008C Violet Dark Theme with Violet Borders) */}
-                <div className={`${isLastRow ? "" : "border-b border-[#59008C]/50"} md:border-l md:border-l-[#59008C]/50 px-4 md:px-6 py-3.5 min-h-[56px] flex flex-col justify-center bg-[#1a0029] text-white relative overflow-hidden`}>
-                  <div className="flex items-center gap-3">
-                    <div className={`w-4 h-4 border shrink-0 flex items-center justify-center transition-all ${
-                      dotxStatus === "idle" ? "border-[#59008C] text-[#59008C] bg-transparent" :
-                      dotxStatus === "running" ? "border-[#59008C] bg-[#59008C] text-white" :
-                      "border-[#59008C] bg-[#59008C] text-white"
-                    }`}>
-                      {dotxStatus === "running" && (
-                        <motion.div className="w-1.5 h-1.5 bg-white" animate={{ scale: [1, 0.4, 1] }} transition={{ duration: 0.3, repeat: Infinity }} />
-                      )}
-                      {dotxStatus === "done" && (
-                        <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 12 12">
-                          <polyline points="2,6 5,9 10,3" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
-                      )}
-                      {dotxStatus === "idle" && <span className="text-[9px]">☑</span>}
-                    </div>
-                    <p className={`font-mono text-xs font-bold transition-colors ${dotxStatus === "idle" ? "text-[#59008C]/60" : "text-[#f3e8ff]"}`}>
-                      {phase.dotx}
-                    </p>
-                  </div>
-                  {dotxStatus === "running" && (
-                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#59008C]/30">
-                      <motion.div className="h-full bg-[#59008C]" initial={{ width: "0%" }} animate={{ width: "100%" }} transition={{ duration: STEP_DELAY / 1000, ease: "linear" }} />
-                    </div>
-                  )}
-                </div>
-
+            {/* Headers */}
+            <div className="grid grid-cols-3">
+              {/* Column 1: Traditional Development (White Theme) */}
+              <div className="border-b border-r border-black/10 px-4 md:px-6 py-4 bg-white">
+                <span className="inline-block px-2 py-0.5 text-[10px] font-mono font-bold uppercase bg-black/5 text-neutral-600 mb-1">
+                  Manual Workflow
+                </span>
+                <h3 className="font-black font-mono text-sm uppercase tracking-wider text-black">
+                  Traditional Development
+                </h3>
               </div>
-            );
-          })}
 
-          {/* Footer Row */}
-          <div className="grid grid-cols-1 md:grid-cols-3 border-t border-black/10">
-            {/* Traditional Development Footer */}
-            <div className="border-r border-black/10 px-4 md:px-6 py-4 bg-white min-h-[52px] flex items-center">
-              <AnimatePresence>
-                {oldDone ? (
-                  <motion.p initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="font-mono text-xs font-black uppercase text-black flex items-center gap-2">
-                    <span className="text-emerald-600 font-bold">✓</span> Project Ready
-                  </motion.p>
-                ) : (
-                  <p className="font-mono text-xs font-bold text-neutral-400 uppercase tracking-wider">Working...</p>
-                )}
-              </AnimatePresence>
+              {/* Column 2: Vibe Coding (Sleek Dark Theme) */}
+              <div className="border-b border-r border-white/10 px-4 md:px-6 py-4 bg-[#181818] text-white">
+                <span className="inline-block px-2 py-0.5 text-[10px] font-mono font-bold uppercase bg-white/10 text-neutral-300 mb-1 truncate max-w-full">
+                  codex, claude code, antigravity, etc.
+                </span>
+                <h3 className="font-black font-mono text-sm uppercase tracking-wider text-white">
+                  Vibe Coding
+                </h3>
+              </div>
+
+              {/* Column 3: DOTX Platform (Rich #59008C Violet Theme with Violet Column Borders) */}
+              <div className="border-b border-[#59008C]/60 md:border-l md:border-l-[#59008C]/80 px-4 md:px-6 py-4 bg-[#240038] text-white">
+                <span className="inline-block px-2 py-0.5 text-[10px] font-mono font-bold uppercase bg-[#59008C] text-white border border-[#59008C] mb-1">
+                  Autonomous AI Platform
+                </span>
+                <h3 className="font-black font-mono text-sm uppercase tracking-wider text-[#f3e8ff]">
+                  DOTX Platform
+                </h3>
+              </div>
             </div>
 
-            {/* Vibe Coding Footer */}
-            <div className="border-r border-white/10 px-4 md:px-6 py-4 bg-[#181818] min-h-[52px] flex items-center">
-              <AnimatePresence>
-                {vibeDone ? (
-                  <motion.p initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="font-mono text-xs font-black uppercase text-white flex items-center gap-2">
-                    <span className="text-emerald-400 font-bold">✓</span> Project Ready
-                  </motion.p>
-                ) : (
-                  <p className="font-mono text-xs font-bold text-neutral-400 uppercase tracking-wider">Prompting...</p>
-                )}
-              </AnimatePresence>
+            {/* Phase Rows */}
+            {phases.map((phase, i) => {
+              const oldStatus = oldStatuses[i];
+              const vibeStatus = vibeStatuses[i];
+              const dotxStatus = dotxStatuses[i];
+              const isLastRow = i === phases.length - 1;
+
+              return (
+                <div key={i} className="grid grid-cols-3">
+
+                  {/* 1. Traditional Development Cell (White) */}
+                  <div className={`border-r ${isLastRow ? "" : "border-b"} border-black/10 px-4 md:px-6 py-3.5 min-h-[56px] flex flex-col justify-center bg-white relative overflow-hidden`}>
+                    <div className="flex items-center gap-3">
+                      <div className={`w-4 h-4 border shrink-0 flex items-center justify-center transition-all ${
+                        oldStatus === "idle" ? "border-black/20 text-black/20" :
+                        oldStatus === "running" ? "border-black bg-black/5 text-black" :
+                        "border-black bg-black text-white"
+                      }`}>
+                        {oldStatus === "running" && (
+                          <motion.div className="w-1.5 h-1.5 bg-black" animate={{ scale: [1, 0.4, 1] }} transition={{ duration: 0.6, repeat: Infinity }} />
+                        )}
+                        {oldStatus === "done" && (
+                          <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 12 12">
+                            <polyline points="2,6 5,9 10,3" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
+                        )}
+                        {oldStatus === "idle" && <span className="text-[9px]">☑</span>}
+                      </div>
+                      <p className={`font-mono text-xs font-bold transition-colors ${oldStatus === "idle" ? "text-neutral-400" : "text-black"}`}>
+                        {phase.old}
+                      </p>
+                    </div>
+                    {oldStatus === "running" && (
+                      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-black/10">
+                        <motion.div className="h-full bg-black/40" initial={{ width: "0%" }} animate={{ width: "100%" }} transition={{ duration: STEP_DELAY / 1000, ease: "linear" }} />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* 2. Vibe Coding Cell (Dark sleek bg-white/5 style color) */}
+                  <div className={`border-r ${isLastRow ? "" : "border-b"} border-white/10 px-4 md:px-6 py-3.5 min-h-[56px] flex flex-col justify-center bg-[#121212] text-neutral-200 relative overflow-hidden`}>
+                    <div className="flex items-center gap-3">
+                      <div className={`w-4 h-4 border shrink-0 flex items-center justify-center transition-all ${
+                        vibeStatus === "idle" ? "border-white/20 text-white/20" :
+                        vibeStatus === "running" ? "border-white/40 bg-white/10 text-white" :
+                        "border-white bg-white text-black"
+                      }`}>
+                        {vibeStatus === "running" && (
+                          <motion.div className="w-1.5 h-1.5 bg-white" animate={{ scale: [1, 0.4, 1] }} transition={{ duration: 0.4, repeat: Infinity }} />
+                        )}
+                        {vibeStatus === "done" && (
+                          <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 12 12">
+                            <polyline points="2,6 5,9 10,3" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
+                        )}
+                        {vibeStatus === "idle" && <span className="text-[9px]">☑</span>}
+                      </div>
+                      <p className={`font-mono text-xs font-bold transition-colors ${vibeStatus === "idle" ? "text-neutral-500" : "text-neutral-200"}`}>
+                        {phase.vibe}
+                      </p>
+                    </div>
+                    {vibeStatus === "running" && (
+                      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-white/10">
+                        <motion.div className="h-full bg-white/40" initial={{ width: "0%" }} animate={{ width: "100%" }} transition={{ duration: STEP_DELAY / 1000, ease: "linear" }} />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* 3. DOTX Platform Cell (Rich #59008C Violet Dark Theme with Violet Borders) */}
+                  <div className={`px-4 md:px-6 py-3.5 min-h-[56px] flex flex-col justify-center bg-[#1a0029] text-white relative overflow-hidden md:border-l md:border-l-[#59008C]/50 ${isLastRow ? "" : "border-b border-[#59008C]/50"}`}>
+                    <div className="flex items-center gap-3">
+                      <div className={`w-4 h-4 border shrink-0 flex items-center justify-center transition-all ${
+                        dotxStatus === "idle" ? "border-[#59008C] text-[#59008C] bg-transparent" :
+                        dotxStatus === "running" ? "border-[#59008C] bg-[#59008C] text-white" :
+                        "border-[#59008C] bg-[#59008C] text-white"
+                      }`}>
+                        {dotxStatus === "running" && (
+                          <motion.div className="w-1.5 h-1.5 bg-white" animate={{ scale: [1, 0.4, 1] }} transition={{ duration: 0.3, repeat: Infinity }} />
+                        )}
+                        {dotxStatus === "done" && (
+                          <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 12 12">
+                            <polyline points="2,6 5,9 10,3" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
+                        )}
+                        {dotxStatus === "idle" && <span className="text-[9px]">☑</span>}
+                      </div>
+                      <p className={`font-mono text-xs font-bold transition-colors ${dotxStatus === "idle" ? "text-[#59008C]/60" : "text-[#f3e8ff]"}`}>
+                        {phase.dotx}
+                      </p>
+                    </div>
+                    {dotxStatus === "running" && (
+                      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#59008C]/30">
+                        <motion.div className="h-full bg-[#59008C]" initial={{ width: "0%" }} animate={{ width: "100%" }} transition={{ duration: STEP_DELAY / 1000, ease: "linear" }} />
+                      </div>
+                    )}
+                  </div>
+
+                </div>
+              );
+            })}
+
+            {/* Footer Row */}
+            <div className="grid grid-cols-3 border-t border-black/10">
+              {/* Traditional Development Footer */}
+              <div className="border-r border-black/10 px-4 md:px-6 py-4 bg-white min-h-[52px] flex items-center">
+                <AnimatePresence>
+                  {oldDone ? (
+                    <motion.p initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="font-mono text-xs font-black uppercase text-black flex items-center gap-2">
+                      <span className="text-emerald-600 font-bold">✓</span> Project Ready
+                    </motion.p>
+                  ) : (
+                    <p className="font-mono text-xs font-bold text-neutral-400 uppercase tracking-wider">Working...</p>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              {/* Vibe Coding Footer */}
+              <div className="border-r border-white/10 px-4 md:px-6 py-4 bg-[#181818] min-h-[52px] flex items-center">
+                <AnimatePresence>
+                  {vibeDone ? (
+                    <motion.p initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="font-mono text-xs font-black uppercase text-white flex items-center gap-2">
+                      <span className="text-emerald-400 font-bold">✓</span> Project Ready
+                    </motion.p>
+                  ) : (
+                    <p className="font-mono text-xs font-bold text-neutral-400 uppercase tracking-wider">Prompting...</p>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              {/* DOTX Platform Footer (Rich Violet Format with Violet Left Border) */}
+              <div className="md:border-l md:border-l-[#59008C]/80 px-4 md:px-6 py-4 bg-[#240038] min-h-[52px] flex items-center">
+                <AnimatePresence>
+                  {dotxDone ? (
+                    <motion.p initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="font-mono text-xs font-black uppercase text-[#f3e8ff] flex items-center gap-2">
+                      <span className="text-emerald-400 font-bold">✓</span> Project Ready
+                    </motion.p>
+                  ) : (
+                    <p className="font-mono text-xs font-bold text-[#59008C]/60 uppercase tracking-wider">Executing...</p>
+                  )}
+                </AnimatePresence>
+              </div>
             </div>
 
-            {/* DOTX Platform Footer (Rich Violet Format with Violet Left Border) */}
-            <div className="md:border-l md:border-l-[#59008C]/80 px-4 md:px-6 py-4 bg-[#240038] min-h-[52px] flex items-center">
-              <AnimatePresence>
-                {dotxDone ? (
-                  <motion.p initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="font-mono text-xs font-black uppercase text-[#f3e8ff] flex items-center gap-2">
-                    <span className="text-emerald-400 font-bold">✓</span> Project Ready
-                  </motion.p>
-                ) : (
-                  <p className="font-mono text-xs font-bold text-[#59008C]/60 uppercase tracking-wider">Executing...</p>
-                )}
-              </AnimatePresence>
-            </div>
           </div>
-
         </div>
       </div>
     </section>
