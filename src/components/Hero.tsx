@@ -59,7 +59,7 @@ export default function Hero() {
           className="mb-10 flex flex-row items-center justify-center gap-3 sm:gap-5"
         >
           <img
-            src="/logo-seamless-perfect.png"
+            src="/logo-original-unmodified.png"
             alt="DotX Logo"
             className="w-14 h-14 sm:w-20 sm:h-20 md:w-24 md:h-24 object-contain block shrink-0"
           />
