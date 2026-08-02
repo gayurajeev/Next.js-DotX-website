@@ -23,18 +23,18 @@ export default function AppShowcase() {
   const opacity = useTransform(scrollYProgress, [0, 0.15], [0, 1]);
 
   return (
-    <section ref={ref} className="py-16 md:py-28 bg-white overflow-hidden">
-      <div className="container mx-auto px-4 md:px-6 max-w-6xl">
+    <section ref={ref} className="py-10 md:py-16 bg-white overflow-hidden">
+      <div className="container mx-auto px-4 md:px-6 max-w-5xl">
 
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12 md:mb-16"
+          transition={{ duration: 0.5 }}
+          className="text-center mb-6 md:mb-8"
         >
-          <p className="font-mono text-xs font-bold uppercase tracking-widest text-neutral-400 mb-3">
+          <p className="font-mono text-xs font-bold uppercase tracking-widest text-neutral-400 mb-2">
             The Desktop App
           </p>
           <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-black">
@@ -52,7 +52,7 @@ export default function AppShowcase() {
           {/* macOS Window Chrome */}
           <div
             className="rounded-xl overflow-hidden border border-black/10"
-            style={{ boxShadow: "0 32px 80px rgba(0,0,0,0.18), 0 4px 16px rgba(0,0,0,0.08)", perspective: "1200px" }}
+            style={{ boxShadow: "0 24px 60px rgba(0,0,0,0.15), 0 4px 16px rgba(0,0,0,0.06)", perspective: "1200px" }}
           >
             {/* Title bar */}
             <div className="bg-[#1a1a1a] h-9 flex items-center px-4 gap-2 shrink-0 border-b border-white/5">
@@ -104,20 +104,20 @@ export default function AppShowcase() {
 
           {/* Reflection / glow under window */}
           <div
-            className="absolute -bottom-8 left-[10%] right-[10%] h-16 blur-2xl rounded-full opacity-20 bg-black pointer-events-none"
+            className="absolute -bottom-4 left-[10%] right-[10%] h-12 blur-xl rounded-full opacity-15 bg-black pointer-events-none"
           />
         </motion.div>
 
-        {/* Feature tags below */}
+        {/* Feature tags directly below screenshot */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.4, duration: 0.5 }}
-          className="flex flex-wrap justify-center gap-3 mt-12"
+          transition={{ delay: 0.3, duration: 0.4 }}
+          className="flex flex-wrap justify-center gap-2.5 mt-5 md:mt-6"
         >
           {["Requirements Ingestion", "AI Agent Coordination", "4-Stage Pipeline", "Real-time Progress", "Document Upload"].map((tag) => (
-            <span key={tag} className="font-mono text-xs font-bold uppercase tracking-widest border border-black/15 px-4 py-2 text-neutral-500 hover:border-black hover:text-black transition-colors cursor-default">
+            <span key={tag} className="font-mono text-[11px] md:text-xs font-bold uppercase tracking-widest border border-black/15 bg-white px-3.5 py-1.5 text-neutral-600 hover:border-black hover:text-black transition-colors cursor-default shadow-sm">
               {tag}
             </span>
           ))}
