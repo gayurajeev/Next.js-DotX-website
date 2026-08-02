@@ -227,12 +227,12 @@ export default function WorkflowComparison() {
                 <div className={`${isLastRow ? "" : "border-b border-[#59008C]/30"} px-4 md:px-6 py-3.5 min-h-[56px] flex flex-col justify-center bg-[#12001f] text-white relative overflow-hidden`}>
                   <div className="flex items-center gap-3">
                     <div className={`w-4 h-4 border shrink-0 flex items-center justify-center transition-all ${
-                      dotxStatus === "idle" ? "border-[#59008C]/50 text-[#59008C]/50 bg-[#12001f]" :
-                      dotxStatus === "running" ? "border-[#59008C] bg-[#59008C]/40 text-[#e9d5ff]" :
+                      dotxStatus === "idle" ? "border-[#59008C] text-[#59008C] bg-transparent" :
+                      dotxStatus === "running" ? "border-[#59008C] bg-[#59008C] text-white" :
                       "border-[#59008C] bg-[#59008C] text-white"
                     }`}>
                       {dotxStatus === "running" && (
-                        <motion.div className="w-1.5 h-1.5 bg-[#e9d5ff]" animate={{ scale: [1, 0.4, 1] }} transition={{ duration: 0.3, repeat: Infinity }} />
+                        <motion.div className="w-1.5 h-1.5 bg-white" animate={{ scale: [1, 0.4, 1] }} transition={{ duration: 0.3, repeat: Infinity }} />
                       )}
                       {dotxStatus === "done" && (
                         <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 12 12">
@@ -241,12 +241,12 @@ export default function WorkflowComparison() {
                       )}
                       {dotxStatus === "idle" && <span className="text-[9px]">☑</span>}
                     </div>
-                    <p className={`font-mono text-xs font-bold transition-colors ${dotxStatus === "idle" ? "text-[#59008C]/40" : "text-[#e9d5ff]"}`}>
+                    <p className={`font-mono text-xs font-bold transition-colors ${dotxStatus === "idle" ? "text-neutral-400" : "text-[#e9d5ff]"}`}>
                       {phase.dotx}
                     </p>
                   </div>
                   {dotxStatus === "running" && (
-                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#59008C]/20">
+                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#59008C]/30">
                       <motion.div className="h-full bg-[#59008C]" initial={{ width: "0%" }} animate={{ width: "100%" }} transition={{ duration: STEP_DELAY / 1000, ease: "linear" }} />
                     </div>
                   )}
@@ -289,10 +289,10 @@ export default function WorkflowComparison() {
               <AnimatePresence>
                 {dotxDone ? (
                   <motion.p initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="font-mono text-xs font-black uppercase text-[#e9d5ff] flex items-center gap-2">
-                    <span className="text-[#59008C] bg-white rounded-full w-4 h-4 flex items-center justify-center font-bold text-[10px]">✓</span> Project Ready
+                    <span className="text-[#59008C] font-bold text-sm">✓</span> Project Ready
                   </motion.p>
                 ) : (
-                  <p className="font-mono text-xs font-bold text-[#59008C]/60 uppercase tracking-wider">Executing...</p>
+                  <p className="font-mono text-xs font-bold text-neutral-400 uppercase tracking-wider">Executing...</p>
                 )}
               </AnimatePresence>
             </div>
