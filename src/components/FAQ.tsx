@@ -7,27 +7,23 @@ import { Plus, Minus } from "lucide-react";
 const faqs = [
   {
     question: "What is DotX?",
-    answer: "DotX is an autonomous AI platform that manages the complete software development lifecycle — from analyzing requirements documents (PRDs, FRDs, NFRs) to generating implementation plans, coordinating specialized AI agents, coding, testing, debugging, documentation, deployment, and project management."
+    answer: "DotX is an autonomous AI desktop application that turns raw requirement documents (PRDs, FRDs, specs) into fully finished, tested codebases — coordinating specialized AI agents to execute tasks automatically."
   },
   {
-    question: "What is EnterpriseX?",
-    answer: "EnterpriseX extends DotX's autonomous agent architecture to enterprise environments. It enables intelligent workflow automation, business process management, decision support, manufacturing optimization, logistics coordination, resource planning, and digital transformation across multiple industries."
+    question: "How is DotX different from Vibe Coding tools (Claude Code, Codex)?",
+    answer: "Unlike chat-based or vibe coding tools that require constant manual prompt engineering, context management, and debug loops, DotX forms a dynamic multi-agent organization that autonomously plans, writes, reviews, and tests your software end-to-end."
   },
   {
-    question: "What AI models does the platform use?",
-    answer: "DotX integrates multiple Large Language Models including GPT, Claude, Gemini, and custom AI models. The platform intelligently selects the most capable model for each specific task, ensuring maximum reasoning quality across the development lifecycle."
+    question: "Does DotX run locally on my desktop?",
+    answer: "Yes. DotX is built as a native desktop application for macOS and Windows for maximum speed, security, and responsiveness — operating cleanly without browser tab clutter or Electron overhead."
   },
   {
-    question: "What is the technology stack?",
-    answer: "The backend is built on ASP.NET Core (.NET), Spring Boot, and FastAPI. The desktop app uses Avalonia UI for cross-platform support. Supporting technologies include PostgreSQL, pgvector, Redis, Docker, MinIO, SignalR/WebSockets, and GitHub Actions — following a scalable partial microservice architecture."
+    question: "What input documents can I give to DotX?",
+    answer: "You can upload PRDs, FRDs, architecture blueprints, API specifications, user stories, or design mockups. DotX's Requirements & Planning agents automatically parse them into structured tasks and execution blueprints."
   },
   {
-    question: "How do the AI agents collaborate?",
-    answer: "Specialized agents handle distinct responsibilities — planning, reasoning, execution, monitoring, and continuous learning. They communicate in real time via SignalR and WebSockets, coordinating autonomously without manual developer intervention at each handoff."
-  },
-  {
-    question: "Which platforms does DotX run on?",
-    answer: "DotX's desktop client is built with Avalonia UI, providing a native cross-platform experience on Windows, macOS, and Linux — with no browser or Electron overhead."
+    question: "Is my code and project data secure?",
+    answer: "Absolutely. All project files, agent logs, and workspace codebases stay on your local machine. DotX operates directly within your local environment without storing your source code on external servers."
   }
 ];
 
