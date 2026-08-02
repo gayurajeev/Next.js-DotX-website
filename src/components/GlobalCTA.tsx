@@ -37,7 +37,7 @@ function WireframeGlobe() {
       return { sx: cx + p[0] * R, sy: cy - p[1] * R, z: p[2] };
     }
 
-    function strokeArc(pts: { sx: number; sy: number; z: number }[], fColor: string, bColor: string) {
+    function strokeArc(ctx: CanvasRenderingContext2D, pts: { sx: number; sy: number; z: number }[], fColor: string, bColor: string) {
       for (let pass = 0; pass < 2; pass++) {
         const front = pass === 1;
         let penDown = false;
@@ -56,6 +56,7 @@ function WireframeGlobe() {
     }
 
     function draw() {
+      if (!ctx) return;
       ctx.clearRect(0, 0, SIZE, SIZE);
       ctx.save();
       ctx.beginPath();
@@ -67,14 +68,14 @@ function WireframeGlobe() {
         for (let i = 0; i <= STEPS; i++) {
           pts.push(project(rotY(toXYZ(lat * Math.PI / 180, (i / STEPS) * Math.PI * 2), angle)));
         }
-        strokeArc(pts, "rgba(0,0,0,0.85)", "rgba(0,0,0,0.12)");
+        strokeArc(ctx, pts, "rgba(0,0,0,0.85)", "rgba(0,0,0,0.12)");
       }
       for (let lon = 0; lon < 360; lon += LON_STEP) {
         const pts = [];
         for (let i = 0; i <= STEPS; i++) {
           pts.push(project(rotY(toXYZ((i / STEPS) * Math.PI - Math.PI / 2, lon * Math.PI / 180), angle)));
         }
-        strokeArc(pts, "rgba(0,0,0,0.85)", "rgba(0,0,0,0.12)");
+        strokeArc(ctx, pts, "rgba(0,0,0,0.85)", "rgba(0,0,0,0.12)");
       }
       ctx.restore();
 
