@@ -65,12 +65,12 @@ export default function Hero() {
           />
         </motion.div>
 
-        {/* DotX writing under the logo — exact same scramble effect & style as BUILD. DELIVER. */}
+        {/* DotX writing under the logo — exact same font size and everything as BUILD. DELIVER. */}
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-white uppercase mb-10"
+          className="text-base sm:text-3xl md:text-5xl lg:text-6xl xl:text-[4.5rem] 2xl:text-[5.5rem] font-black tracking-tight leading-tight text-white uppercase mb-10"
         >
           <ScrambleLine text="DotX" delay={500} />
         </motion.div>
