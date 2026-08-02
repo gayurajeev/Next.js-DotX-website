@@ -289,7 +289,7 @@ export default function WorkflowComparison() {
               <AnimatePresence>
                 {dotxDone ? (
                   <motion.p initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="font-mono text-xs font-black uppercase text-[#e9d5ff] flex items-center gap-2">
-                    <span className="text-[#59008C] font-bold text-sm">✓</span> Project Ready
+                    <span className="text-emerald-400 font-bold">✓</span> Project Ready
                   </motion.p>
                 ) : (
                   <p className="font-mono text-xs font-bold text-neutral-400 uppercase tracking-wider">Executing...</p>
