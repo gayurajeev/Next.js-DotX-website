@@ -5,8 +5,8 @@ export default function Footer() {
         
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 overflow-hidden shrink-0 rounded-lg">
-              <img src="/logo-clean.png" alt="DotX Logo" className="w-full h-full object-cover" />
+            <div className="w-9 h-9 overflow-hidden shrink-0">
+              <img src="/logo-highres-seamless.png" alt="DotX Logo" className="w-full h-full object-contain block" />
             </div>
             <span className="font-black tracking-tighter text-xl">DotX</span>
           </div>
