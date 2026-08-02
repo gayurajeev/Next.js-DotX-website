@@ -58,9 +58,11 @@ export default function Hero() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="relative mb-4 flex items-center justify-center"
         >
-          <div className="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 lg:w-48 lg:h-48 overflow-hidden shrink-0 rounded-2xl md:rounded-3xl">
-            <img src="/logo-clean.png" alt="DotX Logo" className="w-full h-full object-cover" />
-          </div>
+          <img
+            src="/logo-attached-seamless.png"
+            alt="DotX Logo"
+            className="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 lg:w-48 lg:h-48 object-contain block"
+          />
         </motion.div>
 
         {/* DotX writing under the logo */}
