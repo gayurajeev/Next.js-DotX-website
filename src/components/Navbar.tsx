@@ -10,7 +10,7 @@ export default function Navbar() {
           <div className="w-9 h-9 overflow-hidden shrink-0">
             <img src="/logo-highres-seamless.png" alt="DotX Logo" className="w-full h-full object-contain block" />
           </div>
-          <span className="font-black text-black tracking-tighter uppercase text-xl leading-none">DotX</span>
+          <span className="font-black text-black tracking-tighter text-xl leading-none">DotX</span>
         </a>
         
         {/* Nav Links */}

@@ -4,7 +4,8 @@ import { motion } from "framer-motion";
 import { MacLogo, WindowsLogo } from "@/components/OsLogos";
 import { useEffect, useState } from "react";
 
-const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%";
+const CHARS_UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%";
+const CHARS_LOWER = "abcdefghijklmnopqrstuvwxyz0123456789!@#$%";
 const WORDS = ["BUILD.", "DELIVER.", "AUTOMATE."];
 
 function ScrambleLine({ text, delay = 0 }: { text: string; delay?: number }) {
@@ -22,7 +23,9 @@ function ScrambleLine({ text, delay = 0 }: { text: string; delay?: number }) {
             .map((char, idx) => {
               if (char === " " || char === "\n") return char;
               if (idx < iteration / 6) return char;
-              return CHARS[Math.floor(Math.random() * CHARS.length)];
+              const isLower = char >= "a" && char <= "z";
+              const charPool = isLower ? CHARS_LOWER : CHARS_UPPER;
+              return charPool[Math.floor(Math.random() * charPool.length)];
             })
             .join("")
         );
@@ -70,7 +73,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-[6rem] 2xl:text-[7.5rem] font-black tracking-tight leading-none text-white uppercase mb-10"
+          className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-[6rem] 2xl:text-[7.5rem] font-black tracking-tight leading-none text-white mb-10"
         >
           <ScrambleLine text="DotX" delay={500} />
         </motion.div>
