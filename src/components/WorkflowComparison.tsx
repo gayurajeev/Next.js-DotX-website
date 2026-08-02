@@ -144,10 +144,10 @@ export default function WorkflowComparison() {
               </h3>
             </div>
 
-            {/* Column 3: DOTX Platform (Purple Theme) */}
-            <div className="border-b border-purple-800/60 px-4 md:px-6 py-4 bg-purple-950 text-white relative overflow-hidden">
+            {/* Column 3: DOTX Platform (Sleek Dark Theme with Purple Accents) */}
+            <div className="border-b border-purple-800/40 px-4 md:px-6 py-4 bg-[#130d21] text-white relative overflow-hidden">
               <div className="absolute top-0 right-0 w-24 h-24 bg-purple-500/10 blur-xl pointer-events-none" />
-              <span className="inline-block px-2 py-0.5 text-[10px] font-mono font-bold uppercase bg-purple-500/20 text-purple-200 border border-purple-500/30 mb-1">
+              <span className="inline-block px-2 py-0.5 text-[10px] font-mono font-bold uppercase bg-purple-500/20 text-purple-300 border border-purple-500/30 mb-1">
                 Autonomous AI Platform
               </span>
               <h3 className="font-black font-mono text-sm uppercase tracking-wider text-purple-100 flex items-center gap-2">
@@ -225,12 +225,12 @@ export default function WorkflowComparison() {
                   )}
                 </div>
 
-                {/* 3. DOTX Platform Cell (Purple Theme without tick box glow) */}
-                <div className={`${isLastRow ? "" : "border-b border-purple-900/60"} px-4 md:px-6 py-3.5 min-h-[56px] flex flex-col justify-center bg-purple-950 text-white relative overflow-hidden`}>
+                {/* 3. DOTX Platform Cell (Sleek dark purple theme) */}
+                <div className={`${isLastRow ? "" : "border-b border-purple-900/40"} px-4 md:px-6 py-3.5 min-h-[56px] flex flex-col justify-center bg-[#0d0718] text-white relative overflow-hidden`}>
                   <div className="flex items-center gap-3">
                     <div className={`w-4 h-4 border shrink-0 flex items-center justify-center transition-all ${
-                      dotxStatus === "idle" ? "border-purple-800/80 text-purple-800/80 bg-purple-950" :
-                      dotxStatus === "running" ? "border-purple-400 bg-purple-900/80 text-purple-300" :
+                      dotxStatus === "idle" ? "border-purple-800/60 text-purple-800/60 bg-[#0d0718]" :
+                      dotxStatus === "running" ? "border-purple-400 bg-purple-950 text-purple-300" :
                       "border-purple-400 bg-purple-600 text-white"
                     }`}>
                       {dotxStatus === "running" && (
@@ -243,12 +243,12 @@ export default function WorkflowComparison() {
                       )}
                       {dotxStatus === "idle" && <span className="text-[9px]">☑</span>}
                     </div>
-                    <p className={`font-mono text-xs font-bold transition-colors ${dotxStatus === "idle" ? "text-purple-400/40" : "text-purple-100"}`}>
+                    <p className={`font-mono text-xs font-bold transition-colors ${dotxStatus === "idle" ? "text-purple-300/30" : "text-purple-100"}`}>
                       {phase.dotx}
                     </p>
                   </div>
                   {dotxStatus === "running" && (
-                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-purple-900">
+                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-purple-950">
                       <motion.div className="h-full bg-purple-400" initial={{ width: "0%" }} animate={{ width: "100%" }} transition={{ duration: STEP_DELAY / 1000, ease: "linear" }} />
                     </div>
                   )}
@@ -286,13 +286,18 @@ export default function WorkflowComparison() {
               </AnimatePresence>
             </div>
 
-            {/* DOTX Platform Footer */}
-            <div className="px-4 md:px-6 py-4 bg-purple-950 min-h-[52px] flex items-center relative overflow-hidden">
+            {/* DOTX Platform Footer (Sleek Dark Card with Autonomous Badge) */}
+            <div className="px-4 md:px-6 py-4 bg-[#140c24] border-t-2 border-purple-500/40 min-h-[52px] flex items-center relative overflow-hidden">
               <AnimatePresence>
                 {dotxDone ? (
-                  <motion.p initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="font-mono text-xs font-black uppercase text-purple-100 flex items-center gap-2">
-                    <span className="text-purple-300 font-bold">✓</span> Project Ready
-                  </motion.p>
+                  <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="flex items-center justify-between w-full">
+                    <p className="font-mono text-xs font-black uppercase text-white flex items-center gap-2">
+                      <span className="text-purple-400 font-bold">✓</span> Project Ready
+                    </p>
+                    <span className="px-2 py-0.5 text-[9px] font-mono font-bold uppercase bg-purple-500/20 text-purple-300 border border-purple-500/40 rounded">
+                      100% Autonomous
+                    </span>
+                  </motion.div>
                 ) : (
                   <p className="font-mono text-xs font-bold text-purple-400/40 uppercase tracking-wider">Executing...</p>
                 )}
