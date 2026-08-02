@@ -130,14 +130,14 @@ export default function GlobalCTA() {
             <p className="font-mono text-sm text-neutral-400 font-bold leading-relaxed mb-8 max-w-md">
               Windows, macOS, Linux — one native desktop client powered by Avalonia UI. No cloud lock-in, no browser overhead. Your data stays on your machine.
             </p>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-2.5 sm:gap-3">
               {[
                 { name: "macOS", logo: MacLogo },
                 { name: "Windows", logo: WindowsLogo },
                 { name: "Linux", logo: LinuxLogo },
               ].map(({ name, logo: Logo }) => (
-                <div key={name} className="clip-button border-2 border-white/20 px-5 py-2.5 font-mono font-black text-sm uppercase tracking-widest text-white hover:border-white hover:bg-white hover:text-black transition-all cursor-pointer flex items-center gap-2.5">
-                  <Logo className="w-4 h-4 shrink-0" />
+                <div key={name} className="clip-button border-2 border-white/20 px-4 py-2 sm:px-5 sm:py-2.5 font-mono font-black text-xs sm:text-sm uppercase tracking-widest text-white hover:border-white hover:bg-white hover:text-black transition-all cursor-pointer flex items-center gap-2 sm:gap-2.5">
+                  <Logo className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
                   {name}
                 </div>
               ))}

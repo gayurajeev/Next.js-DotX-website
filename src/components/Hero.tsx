@@ -106,14 +106,14 @@ export default function Hero() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 2.3 }}
-          className="flex flex-col sm:flex-row items-center gap-4"
+          className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-full sm:w-auto max-w-sm sm:max-w-none"
         >
-          <button className="w-full sm:w-auto clip-button bg-white text-black px-8 py-4 font-bold uppercase text-xs tracking-widest flex items-center justify-center gap-3 border border-white hover:bg-black hover:text-white transition-all">
-            <MacLogo className="w-4 h-4" />
+          <button className="w-full sm:w-auto clip-button bg-white text-black px-6 sm:px-8 py-3.5 sm:py-4 font-bold uppercase text-xs tracking-widest flex items-center justify-center gap-2.5 sm:gap-3 border border-white hover:bg-black hover:text-white transition-all cursor-pointer">
+            <MacLogo className="w-4 h-4 shrink-0" />
             Download for macOS
           </button>
-          <button className="w-full sm:w-auto clip-button bg-black text-white px-8 py-4 font-bold uppercase text-xs tracking-widest flex items-center justify-center gap-3 border border-white/20 hover:border-white hover:bg-white hover:text-black transition-all">
-            <WindowsLogo className="w-4 h-4" />
+          <button className="w-full sm:w-auto clip-button bg-black text-white px-6 sm:px-8 py-3.5 sm:py-4 font-bold uppercase text-xs tracking-widest flex items-center justify-center gap-2.5 sm:gap-3 border border-white/20 hover:border-white hover:bg-white hover:text-black transition-all cursor-pointer">
+            <WindowsLogo className="w-4 h-4 shrink-0" />
             Download for Windows
           </button>
         </motion.div>
