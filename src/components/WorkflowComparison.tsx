@@ -223,20 +223,20 @@ export default function WorkflowComparison() {
                   )}
                 </div>
 
-                {/* 3. DOTX Platform Cell (Brand Violet #59008C Theme with Green Done Ticks) */}
+                {/* 3. DOTX Platform Cell (Brand Violet #59008C Theme) */}
                 <div className={`${isLastRow ? "" : "border-b border-[#59008C]/30"} px-4 md:px-6 py-3.5 min-h-[56px] flex flex-col justify-center bg-[#12001f] text-white relative overflow-hidden`}>
                   <div className="flex items-center gap-3">
                     <div className={`w-4 h-4 border shrink-0 flex items-center justify-center transition-all ${
-                      dotxStatus === "idle" ? "border-white/20 text-white/20 bg-transparent" :
+                      dotxStatus === "idle" ? "border-[#59008C] text-[#59008C] bg-transparent" :
                       dotxStatus === "running" ? "border-[#59008C] bg-[#59008C] text-white" :
-                      "border-emerald-400 bg-emerald-400 text-black"
+                      "border-[#59008C] bg-[#59008C] text-white"
                     }`}>
                       {dotxStatus === "running" && (
                         <motion.div className="w-1.5 h-1.5 bg-white" animate={{ scale: [1, 0.4, 1] }} transition={{ duration: 0.3, repeat: Infinity }} />
                       )}
                       {dotxStatus === "done" && (
                         <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 12 12">
-                          <polyline points="2,6 5,9 10,3" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          <polyline points="2,6 5,9 10,3" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                       )}
                       {dotxStatus === "idle" && <span className="text-[9px]">☑</span>}
