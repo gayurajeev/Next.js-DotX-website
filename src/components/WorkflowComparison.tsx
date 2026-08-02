@@ -144,8 +144,8 @@ export default function WorkflowComparison() {
               </h3>
             </div>
 
-            {/* Column 3: DOTX Platform (Rich #59008C Violet Theme) */}
-            <div className="border-b border-[#59008C]/40 px-4 md:px-6 py-4 bg-[#240038] text-white">
+            {/* Column 3: DOTX Platform (Rich #59008C Violet Theme with Violet Column Borders) */}
+            <div className="border-b border-[#59008C]/60 md:border-l md:border-l-[#59008C]/80 px-4 md:px-6 py-4 bg-[#240038] text-white">
               <span className="inline-block px-2 py-0.5 text-[10px] font-mono font-bold uppercase bg-[#59008C] text-white border border-[#59008C] mb-1">
                 Autonomous AI Platform
               </span>
@@ -223,11 +223,11 @@ export default function WorkflowComparison() {
                   )}
                 </div>
 
-                {/* 3. DOTX Platform Cell (Rich #59008C Violet Dark Theme) */}
-                <div className={`${isLastRow ? "" : "border-b border-[#59008C]/25"} px-4 md:px-6 py-3.5 min-h-[56px] flex flex-col justify-center bg-[#1a0029] text-white relative overflow-hidden`}>
+                {/* 3. DOTX Platform Cell (Rich #59008C Violet Dark Theme with Violet Borders) */}
+                <div className={`${isLastRow ? "" : "border-b border-[#59008C]/50"} md:border-l md:border-l-[#59008C]/50 px-4 md:px-6 py-3.5 min-h-[56px] flex flex-col justify-center bg-[#1a0029] text-white relative overflow-hidden`}>
                   <div className="flex items-center gap-3">
                     <div className={`w-4 h-4 border shrink-0 flex items-center justify-center transition-all ${
-                      dotxStatus === "idle" ? "border-[#59008C]/60 text-[#59008C]/60 bg-transparent" :
+                      dotxStatus === "idle" ? "border-[#59008C] text-[#59008C] bg-transparent" :
                       dotxStatus === "running" ? "border-[#59008C] bg-[#59008C] text-white" :
                       "border-[#59008C] bg-[#59008C] text-white"
                     }`}>
@@ -284,8 +284,8 @@ export default function WorkflowComparison() {
               </AnimatePresence>
             </div>
 
-            {/* DOTX Platform Footer (Rich Violet Format) */}
-            <div className="px-4 md:px-6 py-4 bg-[#240038] min-h-[52px] flex items-center">
+            {/* DOTX Platform Footer (Rich Violet Format with Violet Left Border) */}
+            <div className="md:border-l md:border-l-[#59008C]/80 px-4 md:px-6 py-4 bg-[#240038] min-h-[52px] flex items-center">
               <AnimatePresence>
                 {dotxDone ? (
                   <motion.p initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="font-mono text-xs font-black uppercase text-[#f3e8ff] flex items-center gap-2">
