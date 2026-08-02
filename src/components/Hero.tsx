@@ -51,20 +51,18 @@ export default function Hero() {
       {/* Main content */}
       <div className="z-10 flex flex-col items-center text-center px-6 max-w-5xl w-full">
 
-        {/* Logo — standard app icon card */}
+        {/* Logo */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="relative mb-8 flex items-center justify-center"
+          className="mb-8 flex items-center justify-center"
         >
-          <div className="w-24 h-24 md:w-28 md:h-28 rounded-2xl md:rounded-3xl overflow-hidden border border-white/15 shadow-2xl shadow-purple-950/30 relative z-10 bg-black">
-            <img
-              src="/logo.jpeg"
-              alt="DotX Logo"
-              className="w-full h-full object-cover block"
-            />
-          </div>
+          <img
+            src="/logo.jpeg"
+            alt="DotX Logo"
+            className="w-24 h-24 md:w-32 md:h-32 object-contain block"
+          />
         </motion.div>
 
         {/* DotX wordmark */}
