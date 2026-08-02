@@ -70,7 +70,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="text-sm sm:text-base font-mono font-black uppercase tracking-[0.35em] text-white mb-10"
+          className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-mono font-black uppercase tracking-[0.2em] text-white mb-10"
         >
           DotX
         </motion.p>
