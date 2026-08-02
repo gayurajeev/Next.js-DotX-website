@@ -58,8 +58,8 @@ export default function Hero() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="mb-8 flex items-center justify-center"
         >
-          <div className="w-20 h-20 md:w-28 md:h-28 overflow-hidden shrink-0 rounded-lg">
-            <img src="/logo.jpeg" alt="DotX Logo" className="w-full h-full object-cover" />
+          <div className="w-20 h-20 md:w-28 md:h-28 overflow-hidden shrink-0 rounded-2xl md:rounded-3xl border border-white/10 shadow-2xl">
+            <img src="/logo-clean.png" alt="DotX Logo" className="w-full h-full object-cover" />
           </div>
         </motion.div>
 
