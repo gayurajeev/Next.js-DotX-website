@@ -66,14 +66,14 @@ export default function Hero() {
         </motion.div>
 
         {/* DotX writing under the logo */}
-        <motion.p
+        <motion.h2
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-mono font-black uppercase tracking-[0.2em] text-white mb-10"
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tighter uppercase mb-10 leading-none"
         >
           DotX
-        </motion.p>
+        </motion.h2>
 
         {/* Scramble headline */}
         <motion.h1
