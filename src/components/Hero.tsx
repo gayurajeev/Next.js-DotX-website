@@ -51,19 +51,19 @@ export default function Hero() {
       {/* Main content */}
       <div className="z-10 flex flex-col items-center text-center px-6 max-w-5xl w-full">
 
-        {/* Logo Brand Mark (Seamless Emblem + Bold White Wordmark) */}
+        {/* Logo Brand Mark (Original Emblem + Bold White Wordmark stacked underneath) */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-10 flex flex-row items-center justify-center gap-3 sm:gap-5"
+          className="mb-10 flex flex-col items-center justify-center gap-3 sm:gap-4"
         >
           <img
             src="/logo-original-unmodified.png"
             alt="DotX Logo"
-            className="w-14 h-14 sm:w-20 sm:h-20 md:w-24 md:h-24 object-contain block shrink-0"
+            className="w-18 h-18 sm:w-24 sm:h-24 md:w-28 md:h-28 object-contain block"
           />
-          <span className="font-black text-white text-4xl sm:text-5xl md:text-6xl tracking-tight leading-none">
+          <span className="font-black text-white text-3xl sm:text-4xl md:text-5xl tracking-tight leading-none">
             DotX
           </span>
         </motion.div>
