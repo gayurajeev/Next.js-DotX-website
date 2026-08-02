@@ -3,25 +3,60 @@
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 
+const STEP_DELAY = 800; // All 3 columns run at the exact same 800ms speed
+const STEP_GAP = 150;
+
 const phases = [
-  { label: "Requirements",  oldDelay: 1200, dotxDelay: 300,  oldBlock: "Manual meetings" },
-  { label: "Architecture",  oldDelay: 1600, dotxDelay: 300,  oldBlock: "Alignment overhead" },
-  { label: "Development",   oldDelay: 2400, dotxDelay: 400,  oldBlock: "Siloed engineers" },
-  { label: "Testing",       oldDelay: 1800, dotxDelay: 300,  oldBlock: "Late-stage bugs" },
-  { label: "Deployment",    oldDelay: 1400, dotxDelay: 250,  oldBlock: "Manual release" },
+  {
+    old: "Gather Requirements",
+    vibe: "Chat with AI",
+    dotx: "Upload Project Documents"
+  },
+  {
+    old: "Requirement Analysis",
+    vibe: "Write Prompts",
+    dotx: "AI Requirement Analysis"
+  },
+  {
+    old: "Design Architecture",
+    vibe: "Generate Code",
+    dotx: "Autonomous Architecture"
+  },
+  {
+    old: "Build Development Team",
+    vibe: "Manually Manage Context",
+    dotx: "Create AI Organization"
+  },
+  {
+    old: "Assign Tasks",
+    vibe: "Switch Between Agents",
+    dotx: "Dynamic Agent Formation"
+  },
+  {
+    old: "Manual Development",
+    vibe: "AI-Assisted Coding",
+    dotx: "Parallel Multi-Agent Development"
+  },
+  {
+    old: "Manual Code Reviews",
+    vibe: "Review AI Output",
+    dotx: "Autonomous Review Loops"
+  },
+  {
+    old: "Manual Testing",
+    vibe: "Run Tests Manually",
+    dotx: "Autonomous Testing"
+  },
+  {
+    old: "Fix Bugs & Rework",
+    vibe: "Prompt Until It Works",
+    dotx: "Continuous Self-Improvement"
+  },
 ];
 
-const oldStarts = phases.reduce<number[]>((acc, p, i) => {
-  acc.push(i === 0 ? 600 : acc[i - 1] + phases[i - 1].oldDelay + 200);
-  return acc;
-}, []);
-const dotxStarts = phases.reduce<number[]>((acc, p, i) => {
-  acc.push(i === 0 ? 600 : acc[i - 1] + phases[i - 1].dotxDelay + 80);
-  return acc;
-}, []);
-
-const totalOldTime = oldStarts[phases.length - 1] + phases[phases.length - 1].oldDelay + 800;
-const loopDuration = totalOldTime + 2000;
+const starts = phases.map((_, i) => 500 + i * (STEP_DELAY + STEP_GAP));
+const totalTime = starts[phases.length - 1] + STEP_DELAY + 800;
+const loopDuration = totalTime + 2000;
 
 type PhaseState = "idle" | "running" | "done";
 
@@ -30,36 +65,42 @@ export default function WorkflowComparison() {
   const inView = useInView(ref, { once: true });
   const [tick, setTick] = useState(0);
   const [oldStatuses, setOldStatuses] = useState<PhaseState[]>(phases.map(() => "idle"));
+  const [vibeStatuses, setVibeStatuses] = useState<PhaseState[]>(phases.map(() => "idle"));
   const [dotxStatuses, setDotxStatuses] = useState<PhaseState[]>(phases.map(() => "idle"));
   const [dotxDone, setDotxDone] = useState(false);
+  const [vibeDone, setVibeDone] = useState(false);
   const [oldDone, setOldDone] = useState(false);
 
   useEffect(() => {
     if (!inView) return;
     const timers: ReturnType<typeof setTimeout>[] = [];
     setOldStatuses(phases.map(() => "idle"));
+    setVibeStatuses(phases.map(() => "idle"));
     setDotxStatuses(phases.map(() => "idle"));
     setDotxDone(false);
+    setVibeDone(false);
     setOldDone(false);
 
-    phases.forEach((p, i) => {
+    // Synchronous execution loop — all 3 columns progress at identical speed
+    phases.forEach((_, i) => {
+      // Start step in sync
       timers.push(setTimeout(() => {
         setOldStatuses((prev) => { const n = [...prev]; n[i] = "running"; return n; });
-      }, oldStarts[i]));
+        setVibeStatuses((prev) => { const n = [...prev]; n[i] = "running"; return n; });
+        setDotxStatuses((prev) => { const n = [...prev]; n[i] = "running"; return n; });
+      }, starts[i]));
+
+      // Complete step in sync
       timers.push(setTimeout(() => {
         setOldStatuses((prev) => { const n = [...prev]; n[i] = "done"; return n; });
-        if (i === phases.length - 1) setOldDone(true);
-      }, oldStarts[i] + p.oldDelay));
-    });
-
-    phases.forEach((p, i) => {
-      timers.push(setTimeout(() => {
-        setDotxStatuses((prev) => { const n = [...prev]; n[i] = "running"; return n; });
-      }, dotxStarts[i]));
-      timers.push(setTimeout(() => {
+        setVibeStatuses((prev) => { const n = [...prev]; n[i] = "done"; return n; });
         setDotxStatuses((prev) => { const n = [...prev]; n[i] = "done"; return n; });
-        if (i === phases.length - 1) setDotxDone(true);
-      }, dotxStarts[i] + p.dotxDelay));
+        if (i === phases.length - 1) {
+          setOldDone(true);
+          setVibeDone(true);
+          setDotxDone(true);
+        }
+      }, starts[i] + STEP_DELAY));
     });
 
     const loopTimer = setTimeout(() => setTick((t) => t + 1), loopDuration);
@@ -68,43 +109,71 @@ export default function WorkflowComparison() {
   }, [inView, tick]);
 
   return (
-    <section ref={ref} className="py-16 md:py-24 bg-white border-y border-black/10">
-      <div className="container mx-auto px-4 md:px-6 max-w-5xl">
+    <section ref={ref} className="py-16 md:py-24 bg-black text-white border-y border-white/10">
+      <div className="container mx-auto px-4 md:px-6 max-w-6xl">
 
         <div className="text-center mb-10 md:mb-14">
           <p className="font-mono text-xs font-bold uppercase tracking-widest text-neutral-400 mb-2">Live Comparison</p>
-          <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-black">
+          <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-white">
             The Old Way vs. DotX
           </h2>
         </div>
 
-        {/* Race Grid — stacks on mobile */}
-        <div className="border border-black/15 overflow-hidden" style={{ boxShadow: "2px 2px 0 rgba(0,0,0,0.06)" }}>
+        {/* 3-Column Comparison Grid */}
+        <div className="border border-black/15 overflow-hidden shadow-sm">
 
           {/* Headers */}
-          <div className="grid grid-cols-2">
-            <div className="border-r border-b border-black/10 px-4 md:px-8 py-3 bg-neutral-50">
-              <p className="font-black font-mono text-xs uppercase tracking-widest text-neutral-400">Traditional Dev</p>
+          <div className="grid grid-cols-1 md:grid-cols-3">
+            {/* Column 1: Traditional Development (White Theme) */}
+            <div className="border-b border-r border-black/10 px-4 md:px-6 py-4 bg-white">
+              <span className="inline-block px-2 py-0.5 text-[10px] font-mono font-bold uppercase bg-black/5 text-neutral-600 mb-1">
+                Manual Workflow
+              </span>
+              <h3 className="font-black font-mono text-sm uppercase tracking-wider text-black">
+                Traditional Development
+              </h3>
             </div>
-            <div className="border-b border-black/10 px-4 md:px-8 py-3 bg-black">
-              <p className="font-black font-mono text-xs uppercase tracking-widest text-white">DotX Platform</p>
+
+            {/* Column 2: Vibe Coding (Grey Theme) */}
+            <div className="border-b border-r border-neutral-700 px-4 md:px-6 py-4 bg-neutral-800 text-white">
+              <span className="inline-block px-2 py-0.5 text-[10px] font-mono font-bold uppercase bg-white/10 text-neutral-300 mb-1 truncate max-w-full">
+                codex, claude code, antigravity, etc.
+              </span>
+              <h3 className="font-black font-mono text-sm uppercase tracking-wider text-white">
+                Vibe Coding
+              </h3>
+            </div>
+
+            {/* Column 3: DOTX Platform (Purple Theme) */}
+            <div className="border-b border-purple-800/60 px-4 md:px-6 py-4 bg-purple-950 text-white relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-purple-500/10 blur-xl pointer-events-none" />
+              <span className="inline-block px-2 py-0.5 text-[10px] font-mono font-bold uppercase bg-purple-500/20 text-purple-200 border border-purple-500/30 mb-1">
+                Autonomous AI Platform
+              </span>
+              <h3 className="font-black font-mono text-sm uppercase tracking-wider text-purple-100 flex items-center gap-2">
+                DOTX Platform
+                <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
+              </h3>
             </div>
           </div>
 
-          {/* Phase rows */}
+          {/* Phase Rows */}
           {phases.map((phase, i) => {
             const oldStatus = oldStatuses[i];
+            const vibeStatus = vibeStatuses[i];
             const dotxStatus = dotxStatuses[i];
             const isLastRow = i === phases.length - 1;
+
             return (
-              <div key={i} className="grid grid-cols-2">
-                {/* Old Way Cell */}
-                <div className={`border-r ${isLastRow ? "" : "border-b"} border-black/10 px-4 md:px-8 py-4 min-h-[64px] flex flex-col justify-center bg-neutral-50 relative overflow-hidden`}>
-                  <div className="flex items-center gap-2 md:gap-3">
+              <div key={i} className="grid grid-cols-1 md:grid-cols-3">
+
+                {/* 1. Traditional Development Cell (White) */}
+                <div className={`border-r ${isLastRow ? "" : "border-b"} border-black/10 px-4 md:px-6 py-3.5 min-h-[56px] flex flex-col justify-center bg-white relative overflow-hidden`}>
+                  <div className="flex items-center gap-3">
                     <div className={`w-4 h-4 border shrink-0 flex items-center justify-center transition-all ${
-                      oldStatus === "idle" ? "border-black/20" :
-                      oldStatus === "running" ? "border-black" :
-                      "border-black bg-black"
+                      oldStatus === "idle" ? "border-black/20 text-black/20" :
+                      oldStatus === "running" ? "border-black bg-black/5 text-black" :
+                      "border-black bg-black text-white"
                     }`}>
                       {oldStatus === "running" && (
                         <motion.div className="w-1.5 h-1.5 bg-black" animate={{ scale: [1, 0.4, 1] }} transition={{ duration: 0.6, repeat: Infinity }} />
@@ -114,79 +183,118 @@ export default function WorkflowComparison() {
                           <polyline points="2,6 5,9 10,3" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                       )}
+                      {oldStatus === "idle" && <span className="text-[9px]">☑</span>}
                     </div>
-                    <div className="min-w-0">
-                      <p className={`font-black font-mono text-xs uppercase truncate transition-colors ${oldStatus === "idle" ? "text-neutral-300" : "text-black"}`}>
-                        {phase.label}
-                      </p>
-                      {oldStatus === "running" && (
-                        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="font-mono text-[10px] text-neutral-400 mt-0.5 hidden sm:block">
-                          ⚠ {phase.oldBlock}
-                        </motion.p>
-                      )}
-                    </div>
+                    <p className={`font-mono text-xs font-bold transition-colors ${oldStatus === "idle" ? "text-neutral-400" : "text-black"}`}>
+                      {phase.old}
+                    </p>
                   </div>
                   {oldStatus === "running" && (
                     <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-black/10">
-                      <motion.div className="h-full bg-black/30" initial={{ width: "0%" }} animate={{ width: "100%" }} transition={{ duration: phase.oldDelay / 1000, ease: "linear" }} />
+                      <motion.div className="h-full bg-black/40" initial={{ width: "0%" }} animate={{ width: "100%" }} transition={{ duration: STEP_DELAY / 1000, ease: "linear" }} />
                     </div>
                   )}
                 </div>
 
-                {/* DotX Cell */}
-                <div className={`${isLastRow ? "" : "border-b border-white/10"} px-4 md:px-8 py-4 min-h-[64px] flex flex-col justify-center bg-black relative overflow-hidden`}>
-                  <div className="flex items-center gap-2 md:gap-3">
+                {/* 2. Vibe Coding Cell (Grey) */}
+                <div className={`border-r ${isLastRow ? "" : "border-b"} border-neutral-700 px-4 md:px-6 py-3.5 min-h-[56px] flex flex-col justify-center bg-neutral-900 text-neutral-200 relative overflow-hidden`}>
+                  <div className="flex items-center gap-3">
                     <div className={`w-4 h-4 border shrink-0 flex items-center justify-center transition-all ${
-                      dotxStatus === "idle" ? "border-white/20" :
-                      dotxStatus === "running" ? "border-white" :
-                      "border-white bg-white"
+                      vibeStatus === "idle" ? "border-neutral-600 text-neutral-600" :
+                      vibeStatus === "running" ? "border-neutral-300 bg-neutral-800 text-neutral-300" :
+                      "border-neutral-200 bg-neutral-200 text-black"
                     }`}>
-                      {dotxStatus === "running" && (
-                        <motion.div className="w-1.5 h-1.5 bg-white" animate={{ scale: [1, 0.4, 1] }} transition={{ duration: 0.3, repeat: Infinity }} />
+                      {vibeStatus === "running" && (
+                        <motion.div className="w-1.5 h-1.5 bg-neutral-300" animate={{ scale: [1, 0.4, 1] }} transition={{ duration: 0.4, repeat: Infinity }} />
                       )}
-                      {dotxStatus === "done" && (
+                      {vibeStatus === "done" && (
                         <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 12 12">
                           <polyline points="2,6 5,9 10,3" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                       )}
+                      {vibeStatus === "idle" && <span className="text-[9px]">☑</span>}
                     </div>
-                    <div className="min-w-0">
-                      <p className={`font-black font-mono text-xs uppercase truncate transition-colors ${dotxStatus === "idle" ? "text-white/20" : "text-white"}`}>
-                        {phase.label}
-                      </p>
-                    </div>
+                    <p className={`font-mono text-xs font-bold transition-colors ${vibeStatus === "idle" ? "text-neutral-500" : "text-neutral-200"}`}>
+                      {phase.vibe}
+                    </p>
                   </div>
-                  {dotxStatus === "running" && (
-                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-white/10">
-                      <motion.div className="h-full bg-white" initial={{ width: "0%" }} animate={{ width: "100%" }} transition={{ duration: phase.dotxDelay / 1000, ease: "linear" }} />
+                  {vibeStatus === "running" && (
+                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-neutral-700">
+                      <motion.div className="h-full bg-neutral-400" initial={{ width: "0%" }} animate={{ width: "100%" }} transition={{ duration: STEP_DELAY / 1000, ease: "linear" }} />
                     </div>
                   )}
                 </div>
+
+                {/* 3. DOTX Platform Cell (Purple) */}
+                <div className={`${isLastRow ? "" : "border-b border-purple-900/60"} px-4 md:px-6 py-3.5 min-h-[56px] flex flex-col justify-center bg-purple-950 text-white relative overflow-hidden`}>
+                  <div className="flex items-center gap-3">
+                    <div className={`w-4 h-4 border shrink-0 flex items-center justify-center transition-all ${
+                      dotxStatus === "idle" ? "border-purple-800/80 text-purple-800/80 bg-purple-950" :
+                      dotxStatus === "running" ? "border-purple-400 bg-purple-900/80 text-purple-300 shadow-[0_0_8px_#a855f7]" :
+                      "border-purple-400 bg-purple-500 text-white shadow-[0_0_10px_#a855f7]"
+                    }`}>
+                      {dotxStatus === "running" && (
+                        <motion.div className="w-1.5 h-1.5 bg-purple-300" animate={{ scale: [1, 0.4, 1] }} transition={{ duration: 0.3, repeat: Infinity }} />
+                      )}
+                      {dotxStatus === "done" && (
+                        <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 12 12">
+                          <polyline points="2,6 5,9 10,3" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      )}
+                      {dotxStatus === "idle" && <span className="text-[9px]">☑</span>}
+                    </div>
+                    <p className={`font-mono text-xs font-bold transition-colors ${dotxStatus === "idle" ? "text-purple-400/40" : "text-purple-100"}`}>
+                      {phase.dotx}
+                    </p>
+                  </div>
+                  {dotxStatus === "running" && (
+                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-purple-900">
+                      <motion.div className="h-full bg-purple-400 shadow-[0_0_8px_#c084fc]" initial={{ width: "0%" }} animate={{ width: "100%" }} transition={{ duration: STEP_DELAY / 1000, ease: "linear" }} />
+                    </div>
+                  )}
+                </div>
+
               </div>
             );
           })}
 
-          {/* Footer result row */}
-          <div className="grid grid-cols-2 border-t border-black/10">
-            <div className="border-r border-black/10 px-4 md:px-8 py-4 bg-neutral-100 min-h-[52px] flex items-center">
+          {/* Footer Row */}
+          <div className="grid grid-cols-1 md:grid-cols-3 border-t border-black/10">
+            {/* Traditional Development Footer */}
+            <div className="border-r border-black/10 px-4 md:px-6 py-4 bg-white min-h-[52px] flex items-center">
               <AnimatePresence>
                 {oldDone ? (
-                  <motion.p initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="font-mono text-xs font-black uppercase text-neutral-400 tracking-widest">
-                    Done — eventually.
+                  <motion.p initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="font-mono text-xs font-black uppercase text-black flex items-center gap-2">
+                    <span className="text-emerald-600 font-bold">✓</span> Project Ready
                   </motion.p>
                 ) : (
-                  <p className="font-mono text-xs font-bold text-neutral-300 uppercase tracking-widest">Working...</p>
+                  <p className="font-mono text-xs font-bold text-neutral-400 uppercase tracking-wider">Working...</p>
                 )}
               </AnimatePresence>
             </div>
-            <div className="px-4 md:px-8 py-4 bg-black min-h-[52px] flex items-center">
+
+            {/* Vibe Coding Footer */}
+            <div className="border-r border-neutral-700 px-4 md:px-6 py-4 bg-neutral-800 min-h-[52px] flex items-center">
               <AnimatePresence>
-                {dotxDone ? (
-                  <motion.p initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="font-black text-xs uppercase tracking-widest text-white">
-                    ✓ Completed with DotX
+                {vibeDone ? (
+                  <motion.p initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="font-mono text-xs font-black uppercase text-white flex items-center gap-2">
+                    <span className="text-emerald-400 font-bold">✓</span> Project Ready
                   </motion.p>
                 ) : (
-                  <p className="font-mono text-xs font-bold text-white/20 uppercase tracking-widest">Initializing...</p>
+                  <p className="font-mono text-xs font-bold text-neutral-400 uppercase tracking-wider">Prompting...</p>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* DOTX Platform Footer */}
+            <div className="px-4 md:px-6 py-4 bg-purple-950 min-h-[52px] flex items-center relative overflow-hidden">
+              <AnimatePresence>
+                {dotxDone ? (
+                  <motion.p initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="font-mono text-xs font-black uppercase text-purple-100 flex items-center gap-2">
+                    <span className="text-purple-300 font-bold shadow-[0_0_8px_#c084fc]">✓</span> Project Ready
+                  </motion.p>
+                ) : (
+                  <p className="font-mono text-xs font-bold text-purple-400/40 uppercase tracking-wider">Executing...</p>
                 )}
               </AnimatePresence>
             </div>
