@@ -118,11 +118,11 @@ export default function Hero() {
           transition={{ duration: 0.5, delay: 2.3 }}
           className="flex flex-col sm:flex-row items-center gap-4"
         >
-          <button className="w-full sm:w-auto clip-button bg-white text-black px-8 py-4 font-bold uppercase text-xs tracking-widest flex items-center justify-center gap-3 hover:bg-neutral-200 transition-colors">
+          <button className="w-full sm:w-auto clip-button bg-white text-black px-8 py-4 font-bold uppercase text-xs tracking-widest flex items-center justify-center gap-3 border border-white hover:bg-black hover:text-white transition-all">
             <Apple className="w-4 h-4" />
             Download for macOS
           </button>
-          <button className="w-full sm:w-auto clip-button bg-black text-white px-8 py-4 font-bold uppercase text-xs tracking-widest flex items-center justify-center gap-3 border border-white/20 hover:border-white hover:bg-neutral-900 transition-all">
+          <button className="w-full sm:w-auto clip-button bg-black text-white px-8 py-4 font-bold uppercase text-xs tracking-widest flex items-center justify-center gap-3 border border-white/20 hover:border-white hover:bg-white hover:text-black transition-all">
             <Monitor className="w-4 h-4" />
             Download for Windows
           </button>
