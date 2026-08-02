@@ -20,8 +20,8 @@ const dotxFeatures = [
   },
   {
     num: "04",
-    title: "DEPLOYMENT & DEVOPS",
-    desc: "Handles documentation, deployment pipelines, and project management — fully integrated with Docker, GitHub Actions, and CI/CD workflows."
+    title: "WORK COMPLETION",
+    desc: "Handles documentation, code verification, and project handover — delivering fully completed and tested software deliverables."
   },
 ];
 
@@ -39,7 +39,7 @@ export default function WhatIsDotX() {
               viewport={{ once: true }}
               className="text-3xl md:text-5xl font-black uppercase tracking-tighter mb-4 md:mb-6 leading-none"
             >
-              DOT<br/>X
+              DOTX
             </motion.h2>
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -49,7 +49,7 @@ export default function WhatIsDotX() {
               className="w-16 h-2 bg-white mb-6"
             />
             <p className="text-neutral-400 font-mono text-sm leading-relaxed max-w-xs">
-              FROM REQUIREMENTS TO DEPLOYMENT — ALL DRIVEN BY SPECIALIZED AI AGENTS.
+              FROM REQUIREMENTS TO WORK COMPLETED — ALL DRIVEN BY SPECIALIZED AI AGENTS.
             </p>
           </div>
           <div className="grid sm:grid-cols-2 gap-8">

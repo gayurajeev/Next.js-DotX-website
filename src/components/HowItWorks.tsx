@@ -17,7 +17,7 @@ const agents = [
     id: "planning",
     label: "Planning Agent",
     task: "Generating implementation plan...",
-    output: "✓ 4-phase plan created: Schema → API → Business Logic → Deployment pipeline.",
+    output: "✓ 4-phase plan created: Schema → API → Business Logic → Deliverables.",
   },
   {
     id: "codegen",
@@ -32,10 +32,10 @@ const agents = [
     output: "✓ 48/48 tests passed. 0 failures. Coverage: 94%.",
   },
   {
-    id: "deployment",
-    label: "Deployment Agent",
-    task: "Building Docker image & pushing pipeline...",
-    output: "✓ Deployed to production. Endpoint: https://inventory.dotx.dev",
+    id: "completion",
+    label: "Work Completion Agent",
+    task: "Finalizing project deliverables & verification...",
+    output: "✓ Work completed. All code, unit tests & documentation delivered.",
   },
 ];
 
