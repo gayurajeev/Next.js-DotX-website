@@ -46,11 +46,11 @@ export default function FAQ() {
             return (
               <div key={index} className="border-b border-black/10 bg-white">
                 <button
-                  className="w-full px-6 py-6 flex items-center justify-between text-left hover:bg-black hover:text-white transition-colors group"
+                  className="w-full px-4 sm:px-6 py-5 sm:py-6 flex items-center justify-between text-left hover:bg-black hover:text-white transition-colors group"
                   onClick={() => setOpenIndex(isOpen ? null : index)}
                 >
-                  <span className="font-black text-lg uppercase tracking-tight">{faq.question}</span>
-                  <div className="w-8 h-8 border-2 border-current flex items-center justify-center shrink-0 ml-4">
+                  <span className="font-black text-base sm:text-lg uppercase tracking-tight">{faq.question}</span>
+                  <div className="w-8 h-8 border-2 border-current flex items-center justify-center shrink-0 ml-3 sm:ml-4">
                     {isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
                   </div>
                 </button>
@@ -63,7 +63,7 @@ export default function FAQ() {
                       transition={{ duration: 0.25 }}
                       className="overflow-hidden bg-neutral-100 border-t-2 border-black"
                     >
-                      <div className="px-6 py-8 font-mono text-black font-bold max-w-3xl leading-relaxed">
+                      <div className="px-4 sm:px-6 py-6 sm:py-8 font-mono text-black font-bold max-w-3xl text-xs sm:text-sm leading-relaxed">
                         {faq.answer}
                       </div>
                     </motion.div>
