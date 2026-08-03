@@ -5,23 +5,23 @@ import { motion } from "framer-motion";
 const dotxFeatures = [
   {
     num: "01",
-    title: "REQUIREMENTS ANALYSIS",
-    desc: "Parses and interprets requirements documents — PRD, FRD, NFR — to establish architectural constraints before a single line of code is written."
+    title: "REQUIREMENTS & PLANNING",
+    desc: "Analyzes project requirements and generates granular implementation plans to establish architectural constraints before code execution."
   },
   {
     num: "02",
-    title: "IMPLEMENTATION PLANNING",
-    desc: "Generates granular implementation plans and coordinates specialized AI agents to execute tasks across the full development lifecycle."
+    title: "FULL SDLC AGENT SUITE",
+    desc: "Coordinates specialized AI agents assisting developers across coding, testing, documentation, debugging, and project management."
   },
   {
     num: "03",
-    title: "CODING & DEBUGGING",
-    desc: "Assists developers with code generation, real-time debugging, and automated test writing across multiple languages and frameworks."
+    title: "CROSS-PLATFORM DESKTOP",
+    desc: "Powered by Avalonia UI for native performance across macOS, Windows, and Linux — zero cloud lock-in, data stays on your machine."
   },
   {
     num: "04",
-    title: "WORK COMPLETION",
-    desc: "Handles documentation, code verification, and project handover — delivering fully completed and tested software deliverables."
+    title: "MICROSERVICES & MULTI-LLM",
+    desc: "Engineered on ASP.NET Core, Spring Boot, FastAPI, PostgreSQL, pgvector, Redis, Docker, and Multi-LLMs (GPT, Claude, Gemini)."
   },
 ];
 
@@ -37,7 +37,7 @@ export default function WhatIsDotX() {
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="text-3xl md:text-5xl font-black uppercase tracking-tighter mb-4 md:mb-6 leading-none"
+              className="text-3xl md:text-5xl font-black uppercase tracking-tighter mb-4 md:mb-6 leading-none text-white font-mono"
             >
               DOTX
             </motion.h2>
@@ -46,10 +46,10 @@ export default function WhatIsDotX() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="w-16 h-2 bg-white mb-6"
+              className="w-16 h-2 bg-[#59008C] mb-6"
             />
-            <p className="text-neutral-400 font-mono text-sm leading-relaxed max-w-xs">
-              FROM REQUIREMENTS TO WORK COMPLETED — ALL DRIVEN BY SPECIALIZED AI AGENTS.
+            <p className="text-neutral-400 font-mono text-xs sm:text-sm leading-relaxed max-w-xs font-bold">
+              AUTONOMOUS DESKTOP SDLC PLATFORM — POWERED BY MULTI-LLM INTELLIGENCE.
             </p>
           </div>
           <div className="grid sm:grid-cols-2 gap-8">
@@ -62,9 +62,9 @@ export default function WhatIsDotX() {
                 transition={{ delay: i * 0.1 }}
                 className="border border-white/10 p-8 hover:border-white/40 transition-colors bg-white/5 clip-chamfer"
               >
-                <div className="text-3xl font-black text-white/20 mb-4 font-mono">{feature.num}</div>
-                <h3 className="font-bold text-xl tracking-tight uppercase mb-4">{feature.title}</h3>
-                <p className="text-neutral-400 font-mono text-sm leading-relaxed">{feature.desc}</p>
+                <div className="text-3xl font-black text-[#59008C] mb-4 font-mono">{feature.num}</div>
+                <h3 className="font-bold text-lg tracking-tight uppercase mb-4 text-white font-mono">{feature.title}</h3>
+                <p className="text-neutral-400 font-mono text-xs sm:text-sm leading-relaxed font-medium">{feature.desc}</p>
               </motion.div>
             ))}
           </div>
