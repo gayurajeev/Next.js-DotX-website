@@ -99,9 +99,9 @@ function WireframeGlobe() {
 
 export default function GlobalCTA() {
   return (
-    <section className="py-16 md:py-24 bg-black text-white border-t border-black overflow-hidden relative">
+    <section className="py-12 sm:py-16 md:py-24 bg-black text-white border-t border-black overflow-hidden relative">
       <div className="container mx-auto px-4 md:px-6 max-w-6xl relative z-10">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
 
           {/* Left: Globe */}
           <motion.div
@@ -120,24 +120,25 @@ export default function GlobalCTA() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
+            className="text-left"
           >
-            <p className="font-mono text-xs font-bold uppercase tracking-widest text-[#59008C] mb-4 flex items-center gap-2">
+            <p className="font-mono text-xs font-bold uppercase tracking-widest text-[#59008C] mb-3 sm:mb-4 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-[#59008C]" />
               Cross-platform
             </p>
-            <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter mb-6 leading-tight">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black uppercase tracking-tighter mb-4 sm:mb-6 leading-tight">
               Runs Everywhere.<br />Controlled by You.
             </h2>
-            <p className="font-mono text-sm text-neutral-400 font-bold leading-relaxed mb-8 max-w-md">
+            <p className="font-mono text-xs sm:text-sm text-neutral-400 font-bold leading-relaxed mb-6 sm:mb-8 max-w-md">
               Windows, macOS, Linux — one native desktop client powered by Avalonia UI. No cloud lock-in, no browser overhead. Your data stays on your machine.
             </p>
-            <div className="flex flex-wrap gap-2.5 sm:gap-3">
+            <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-3 w-full sm:w-auto">
               {[
                 { name: "macOS", label: "Download macOS", logo: MacLogo },
                 { name: "Windows", label: "Download Windows", logo: WindowsLogo },
                 { name: "Linux", label: "Download Linux", logo: LinuxLogo },
               ].map(({ name, label, logo: Logo }) => (
-                <a key={name} href="#" className="clip-button border-2 border-white bg-white px-4 py-2 sm:px-5 sm:py-2.5 font-mono font-black text-xs sm:text-sm uppercase tracking-widest text-black hover:bg-black hover:text-white hover:border-[#59008C] transition-all cursor-pointer flex items-center gap-2 sm:gap-2.5 shadow-lg">
+                <a key={name} href="#" className="clip-button w-full sm:w-auto border-2 border-white bg-white px-4 py-3 sm:px-5 sm:py-2.5 font-mono font-black text-xs sm:text-sm uppercase tracking-widest text-black hover:bg-black hover:text-white hover:border-[#59008C] transition-all cursor-pointer flex items-center justify-center gap-2 sm:gap-2.5 shadow-lg">
                   <Logo className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
                   {label}
                 </a>

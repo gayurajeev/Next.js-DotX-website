@@ -56,7 +56,7 @@ function ScrambleLine({
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-16 overflow-hidden bg-black text-white">
+    <section className="relative min-h-[90vh] sm:min-h-screen flex flex-col items-center justify-center pt-20 sm:pt-24 pb-12 sm:pb-16 overflow-hidden bg-black text-white">
 
       {/* Main content */}
       <motion.div
@@ -67,7 +67,7 @@ export default function Hero() {
       >
 
         {/* Logo Image */}
-        <div className="relative mb-3 flex items-center justify-center w-36 sm:w-48 md:w-56 lg:w-64 aspect-[1024/917]">
+        <div className="relative mb-2 sm:mb-3 flex items-center justify-center w-32 sm:w-48 md:w-56 lg:w-64 aspect-[1024/917]">
           <img
             src="/logo-highres-seamless.png"
             alt="DotX Logo"
@@ -79,34 +79,34 @@ export default function Hero() {
         </div>
 
         {/* DotX writing under the logo */}
-        <h1 className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-[6rem] 2xl:text-[7.5rem] font-black font-mono tracking-tight leading-none text-white mb-6">
+        <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[6rem] 2xl:text-[7.5rem] font-black font-mono tracking-tight leading-none text-white mb-4 sm:mb-6">
           <ScrambleLine text="DOTX" fromText="XYPH" delay={0} />
         </h1>
 
         {/* Subtitle */}
-        <p className="text-sm md:text-base text-neutral-400 max-w-lg mb-8 leading-relaxed font-mono">
+        <p className="text-xs sm:text-sm md:text-base text-neutral-400 max-w-lg mb-6 sm:mb-8 leading-relaxed font-mono px-2">
           An autonomous AI platform covering the complete software development lifecycle — from requirements to work completed.
         </p>
 
         {/* Download Buttons for macOS, Windows, Linux */}
-        <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mt-6">
+        <div className="flex flex-col sm:flex-row flex-wrap justify-center items-center gap-3 sm:gap-4 w-full sm:w-auto mt-2 sm:mt-6 px-4 sm:px-0">
           <a
             href="#"
-            className="clip-button border-2 border-white bg-white px-5 py-2.5 sm:px-6 sm:py-3 font-mono font-black text-xs sm:text-sm uppercase tracking-widest text-black hover:bg-black hover:text-white hover:border-[#59008C] transition-all cursor-pointer flex items-center gap-2 sm:gap-2.5 shadow-lg"
+            className="clip-button w-full sm:w-auto border-2 border-white bg-white px-5 py-3 sm:px-6 sm:py-3 font-mono font-black text-xs sm:text-sm uppercase tracking-widest text-black hover:bg-black hover:text-white hover:border-[#59008C] transition-all cursor-pointer flex items-center justify-center gap-2.5 shadow-lg"
           >
             <MacLogo className="w-4 h-4 shrink-0" />
             Download macOS
           </a>
           <a
             href="#"
-            className="clip-button border-2 border-white bg-white px-5 py-2.5 sm:px-6 sm:py-3 font-mono font-black text-xs sm:text-sm uppercase tracking-widest text-black hover:bg-black hover:text-white hover:border-[#59008C] transition-all cursor-pointer flex items-center gap-2 sm:gap-2.5 shadow-lg"
+            className="clip-button w-full sm:w-auto border-2 border-white bg-white px-5 py-3 sm:px-6 sm:py-3 font-mono font-black text-xs sm:text-sm uppercase tracking-widest text-black hover:bg-black hover:text-white hover:border-[#59008C] transition-all cursor-pointer flex items-center justify-center gap-2.5 shadow-lg"
           >
             <WindowsLogo className="w-4 h-4 shrink-0" />
             Download Windows
           </a>
           <a
             href="#"
-            className="clip-button border-2 border-white bg-white px-5 py-2.5 sm:px-6 sm:py-3 font-mono font-black text-xs sm:text-sm uppercase tracking-widest text-black hover:bg-black hover:text-white hover:border-[#59008C] transition-all cursor-pointer flex items-center gap-2 sm:gap-2.5 shadow-lg"
+            className="clip-button w-full sm:w-auto border-2 border-white bg-white px-5 py-3 sm:px-6 sm:py-3 font-mono font-black text-xs sm:text-sm uppercase tracking-widest text-black hover:bg-black hover:text-white hover:border-[#59008C] transition-all cursor-pointer flex items-center justify-center gap-2.5 shadow-lg"
           >
             <LinuxLogo className="w-4 h-4 shrink-0" />
             Download Linux
