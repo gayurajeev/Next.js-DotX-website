@@ -1,47 +1,54 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { MacLogo, WindowsLogo } from "@/components/OsLogos";
 import { useEffect, useState } from "react";
+import { MacLogo, WindowsLogo, LinuxLogo } from "@/components/OsLogos";
 
-const CHARS_UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%";
-const CHARS_LOWER = "abcdefghijklmnopqrstuvwxyz0123456789!@#$%";
-const WORDS = ["BUILD.", "DELIVER.", "AUTOMATE."];
+const XYPHX_CHARS = ["X", "Y", "P", "H"];
 
-function ScrambleLine({ text, delay = 0 }: { text: string; delay?: number }) {
-  const [display, setDisplay] = useState(() => text.replace(/./g, " "));
+function ScrambleLine({
+  text,
+  fromText = "XYPH",
+  delay = 0,
+}: {
+  text: string;
+  fromText?: string;
+  delay?: number;
+}) {
+  const [display, setDisplay] = useState(fromText || text);
   const [done, setDone] = useState(false);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      let iteration = 0;
-      const total = text.length * 6;
+      let step = 0;
+      const totalSteps = 15;
+
       const interval = setInterval(() => {
-        setDisplay(
-          text
-            .split("")
-            .map((char, idx) => {
-              if (char === " " || char === "\n") return char;
-              if (idx < iteration / 6) return char;
-              const isLower = char >= "a" && char <= "z";
-              const charPool = isLower ? CHARS_LOWER : CHARS_UPPER;
-              return charPool[Math.floor(Math.random() * charPool.length)];
-            })
-            .join("")
-        );
-        iteration++;
-        if (iteration > total) {
+        if (step >= totalSteps) {
           clearInterval(interval);
           setDisplay(text);
           setDone(true);
+        } else {
+          const progress = step / totalSteps;
+          const lockedCount = Math.floor(progress * (text.length + 1));
+
+          const scrambled = Array.from({ length: text.length }, (_, idx) => {
+            if (idx < lockedCount && idx < text.length) {
+              return text[idx];
+            }
+            return XYPHX_CHARS[Math.floor(Math.random() * XYPHX_CHARS.length)];
+          }).join("");
+
+          setDisplay(scrambled);
         }
-      }, 28);
+        step++;
+      }, 33);
     }, delay);
     return () => clearTimeout(timeout);
-  }, [text, delay]);
+  }, [text, fromText, delay]);
 
   return (
-    <span className={`font-mono transition-opacity ${done ? "" : "text-neutral-600"}`}>
+    <span className={`font-mono inline-block transition-opacity ${done ? "" : "text-neutral-300"}`}>
       {display}
     </span>
   );
@@ -49,81 +56,64 @@ function ScrambleLine({ text, delay = 0 }: { text: string; delay?: number }) {
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-black text-white">
+    <section className="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-16 overflow-hidden bg-black text-white">
 
       {/* Main content */}
-      <div className="z-10 flex flex-col items-center text-center px-6 max-w-5xl w-full">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="z-10 flex flex-col items-center text-center px-4 sm:px-6 max-w-5xl w-full"
+      >
 
         {/* Logo Image */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="relative mb-4 flex items-center justify-center"
-        >
+        <div className="relative mb-3 flex items-center justify-center w-36 sm:w-48 md:w-56 lg:w-64 aspect-[1024/917]">
           <img
             src="/logo-highres-seamless.png"
             alt="DotX Logo"
-            className="w-40 h-40 sm:w-52 sm:h-52 md:w-64 md:h-64 lg:w-72 lg:h-72 object-contain block"
+            width={1024}
+            height={917}
+            fetchPriority="high"
+            className="w-full h-full object-contain block"
           />
-        </motion.div>
+        </div>
 
         {/* DotX writing under the logo */}
-        <motion.div
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-[6rem] 2xl:text-[7.5rem] font-black tracking-tight leading-none text-white mb-10"
-        >
-          <ScrambleLine text="DotX" delay={500} />
-        </motion.div>
-
-        {/* Scramble headline */}
-        <motion.h1
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3, delay: 0.7 }}
-          className="text-base sm:text-3xl md:text-5xl lg:text-6xl xl:text-[4.5rem] 2xl:text-[5.5rem] font-black tracking-tight mb-6 leading-tight text-white uppercase w-full flex flex-row items-center justify-center gap-1.5 sm:gap-4 md:gap-6 whitespace-nowrap max-w-full px-2 pl-4 sm:pl-12 md:pl-20 lg:pl-32"
-        >
-          <span className="flex-1 text-right">
-            <ScrambleLine text={WORDS[0]} delay={900} />
-          </span>
-          <span className="shrink-0 text-center font-black">
-            <ScrambleLine text={WORDS[1]} delay={1250} />
-          </span>
-          <span className="flex-1 text-left">
-            <ScrambleLine text={WORDS[2]} delay={1600} />
-          </span>
-        </motion.h1>
+        <h1 className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-[6rem] 2xl:text-[7.5rem] font-black font-mono tracking-tight leading-none text-white mb-6">
+          <ScrambleLine text="DOTX" fromText="XYPH" delay={0} />
+        </h1>
 
         {/* Subtitle */}
-        <motion.p
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 2.0 }}
-          className="text-sm md:text-base text-neutral-400 max-w-lg mb-10 leading-relaxed font-mono"
-        >
+        <p className="text-sm md:text-base text-neutral-400 max-w-lg mb-8 leading-relaxed font-mono">
           An autonomous AI platform covering the complete software development lifecycle — from requirements to work completed.
-        </motion.p>
+        </p>
 
-        {/* Buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 2.3 }}
-          className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-full sm:w-auto max-w-sm sm:max-w-none"
-        >
-          <button className="w-full sm:w-auto clip-button bg-white text-black px-6 sm:px-8 py-3.5 sm:py-4 font-bold uppercase text-xs tracking-widest flex items-center justify-center gap-2.5 sm:gap-3 border border-white hover:bg-black hover:text-white transition-all cursor-pointer">
+        {/* Download Buttons for macOS, Windows, Linux */}
+        <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mt-6">
+          <a
+            href="#"
+            className="clip-button border-2 border-white bg-white px-5 py-2.5 sm:px-6 sm:py-3 font-mono font-black text-xs sm:text-sm uppercase tracking-widest text-black hover:bg-black hover:text-white hover:border-[#59008C] transition-all cursor-pointer flex items-center gap-2 sm:gap-2.5 shadow-lg"
+          >
             <MacLogo className="w-4 h-4 shrink-0" />
-            Download for macOS
-          </button>
-          <button className="w-full sm:w-auto clip-button bg-black text-white px-6 sm:px-8 py-3.5 sm:py-4 font-bold uppercase text-xs tracking-widest flex items-center justify-center gap-2.5 sm:gap-3 border border-white/20 hover:border-white hover:bg-white hover:text-black transition-all cursor-pointer">
+            Download macOS
+          </a>
+          <a
+            href="#"
+            className="clip-button border-2 border-white bg-white px-5 py-2.5 sm:px-6 sm:py-3 font-mono font-black text-xs sm:text-sm uppercase tracking-widest text-black hover:bg-black hover:text-white hover:border-[#59008C] transition-all cursor-pointer flex items-center gap-2 sm:gap-2.5 shadow-lg"
+          >
             <WindowsLogo className="w-4 h-4 shrink-0" />
-            Download for Windows
-          </button>
-        </motion.div>
+            Download Windows
+          </a>
+          <a
+            href="#"
+            className="clip-button border-2 border-white bg-white px-5 py-2.5 sm:px-6 sm:py-3 font-mono font-black text-xs sm:text-sm uppercase tracking-widest text-black hover:bg-black hover:text-white hover:border-[#59008C] transition-all cursor-pointer flex items-center gap-2 sm:gap-2.5 shadow-lg"
+          >
+            <LinuxLogo className="w-4 h-4 shrink-0" />
+            Download Linux
+          </a>
+        </div>
 
-      </div>
+      </motion.div>
 
     </section>
   );
