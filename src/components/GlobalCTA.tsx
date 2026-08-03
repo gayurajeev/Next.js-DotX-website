@@ -69,20 +69,20 @@ function WireframeGlobe() {
         for (let i = 0; i <= STEPS; i++) {
           pts.push(project(rotY(toXYZ(lat * Math.PI / 180, (i / STEPS) * Math.PI * 2), angle)));
         }
-        strokeArc(ctx, pts, "rgba(255,255,255,0.85)", "rgba(255,255,255,0.15)");
+        strokeArc(ctx, pts, "rgba(168,85,247,0.95)", "rgba(89,0,140,0.35)");
       }
       for (let lon = 0; lon < 360; lon += LON_STEP) {
         const pts = [];
         for (let i = 0; i <= STEPS; i++) {
           pts.push(project(rotY(toXYZ((i / STEPS) * Math.PI - Math.PI / 2, lon * Math.PI / 180), angle)));
         }
-        strokeArc(ctx, pts, "rgba(255,255,255,0.85)", "rgba(255,255,255,0.15)");
+        strokeArc(ctx, pts, "rgba(168,85,247,0.95)", "rgba(89,0,140,0.35)");
       }
       ctx.restore();
 
       ctx.beginPath();
       ctx.arc(cx, cy, R, 0, Math.PI * 2);
-      ctx.strokeStyle = "rgba(255,255,255,0.85)";
+      ctx.strokeStyle = "rgba(168,85,247,0.95)";
       ctx.lineWidth = 0.8;
       ctx.stroke();
 
@@ -99,8 +99,8 @@ function WireframeGlobe() {
 
 export default function GlobalCTA() {
   return (
-    <section className="py-16 md:py-24 bg-black text-white border-t border-black overflow-hidden">
-      <div className="container mx-auto px-4 md:px-6 max-w-6xl">
+    <section className="py-16 md:py-24 bg-black text-white border-t border-black overflow-hidden relative">
+      <div className="container mx-auto px-4 md:px-6 max-w-6xl relative z-10">
         <div className="grid md:grid-cols-2 gap-12 items-center">
 
           {/* Left: Globe */}
@@ -109,7 +109,7 @@ export default function GlobalCTA() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="flex items-center justify-center"
+            className="flex items-center justify-center relative"
           >
             <WireframeGlobe />
           </motion.div>
@@ -121,7 +121,8 @@ export default function GlobalCTA() {
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
           >
-            <p className="font-mono text-xs font-bold uppercase tracking-widest text-neutral-500 mb-4">
+            <p className="font-mono text-xs font-bold uppercase tracking-widest text-[#59008C] mb-4 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#59008C]" />
               Cross-platform
             </p>
             <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter mb-6 leading-tight">
@@ -132,14 +133,14 @@ export default function GlobalCTA() {
             </p>
             <div className="flex flex-wrap gap-2.5 sm:gap-3">
               {[
-                { name: "macOS", logo: MacLogo },
-                { name: "Windows", logo: WindowsLogo },
-                { name: "Linux", logo: LinuxLogo },
-              ].map(({ name, logo: Logo }) => (
-                <div key={name} className="clip-button border-2 border-white/20 px-4 py-2 sm:px-5 sm:py-2.5 font-mono font-black text-xs sm:text-sm uppercase tracking-widest text-white hover:border-white hover:bg-white hover:text-black transition-all cursor-pointer flex items-center gap-2 sm:gap-2.5">
+                { name: "macOS", label: "Download macOS", logo: MacLogo },
+                { name: "Windows", label: "Download Windows", logo: WindowsLogo },
+                { name: "Linux", label: "Download Linux", logo: LinuxLogo },
+              ].map(({ name, label, logo: Logo }) => (
+                <a key={name} href="#" className="clip-button border-2 border-white bg-white px-4 py-2 sm:px-5 sm:py-2.5 font-mono font-black text-xs sm:text-sm uppercase tracking-widest text-black hover:bg-black hover:text-white hover:border-[#59008C] transition-all cursor-pointer flex items-center gap-2 sm:gap-2.5 shadow-lg">
                   <Logo className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
-                  {name}
-                </div>
+                  {label}
+                </a>
               ))}
             </div>
           </motion.div>
