@@ -27,7 +27,7 @@ const workflowSteps = [
     title: "Code, Test & Debug",
     icon: Cpu,
     description: "Specialized AI agents work together in your environment — writing code, running unit tests & debugging in real time.",
-    points: ["Multi-LLM (GPT, Claude, Gemini)", "Automated Unit & E2E Testing", "Real-Time Error Log Diagnostics"],
+    points: ["Multi-LLM Architecture", "Automated Unit & E2E Testing", "Real-Time Error Log Diagnostics"],
     badge: "Coding & Debugging",
     bgClass: "bg-[#121212] text-white border-white/10",
     pillClass: "bg-white/10 text-neutral-300 font-bold",
